@@ -74,3 +74,6 @@ Supernatural/
 ## Status
 
 Practice project — not production code. Built to reinforce OOP concepts (inheritance, interfaces, encapsulation) by porting an existing Java implementation to PHP. Bugs may unknowingly be present, but will be fixed if there are any.
+
+## Notes
+AI assistance was used for repetitive/boilerplate tasks during development (e.g. repeated form/markup blocks, boilerplate class scaffolding).
