@@ -13,6 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])) {
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="icon" type="image/png" href="https://png.pngtree.com/png-clipart/20250123/original/pngtree-blood-moon-png-image_20325627.png">
+    <title>php practice by crimsoncrows</title>
+    <link rel="icon" type="image/png" href="https://png.pngtree.com/png-clipart/20250123/original/pngtree-blood-moon-png-image_20325627.png">
     <link rel="stylesheet" href="style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])) {
   </p>
   <p class="edu-note">
     A practice project exploring OOP in PHP.
+      Welcome to the zone where the dangerous unknown lurks and mysteries emerge.
   </p>
 </div>
 

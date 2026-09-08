@@ -179,7 +179,6 @@ body{
     padding: 15px;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.167);
-    border-radius: 20px;
     border: 5px dotted rgba(147, 3, 3, 0.215);
 
     appearance: none;
@@ -217,11 +216,15 @@ body{
     font-size: 12px;
 }
 
+/* ======================================== */
+/* RESPONSIVE STAT BAR */
+/* ======================================== */
+
 .stat-bar {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     flex-wrap: wrap;
     margin: 70px auto 0;
     width: 90%;
@@ -267,24 +270,29 @@ body{
     font-weight: 100;
     white-space: nowrap;
 }
-.floating {
-    animation-name: floating;
-    animation-duration: 5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    margin-left: 0px;
-    margin-top: 0px;
+
+/* ======================================== */
+/* RESPONSIVE BATTLEFIELD CONTAINER */
+/* ======================================== */
+
+.battlefield-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 30px;
+    margin: 40px auto 0;
+    width: 90%;
+    max-width: 1200px;
 }
 
 .combat-log {
-    width: 70%;
-    max-width: 700px;
+    width: 60%;
+    margin: 0;
     background: rgba(10, 0, 0, 0.7);
     border: 1px solid rgba(160, 33, 33, 0.4);
     padding: 20px;
     box-sizing: border-box;
-    margin-left: 40px;
-    margin-top:40px;
 }
 
 .combat-log h3 {
@@ -336,6 +344,15 @@ body{
     color: #e0c4c4;
 }
 
+.floating {
+    animation-name: floating;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
 @keyframes floating {
     0% { transform: translate(0,  0px); }
     50%  { transform: translate(0, 15px); }
@@ -355,8 +372,287 @@ body{
     transform: scale(1.1);
 }
 
+/* ======================================== */
+/* PREY AREA */
+/* ======================================== */
 
-/* ===== prepare.php page ===== */
+.prey-area {
+    width: 40%;
+    background: rgba(10, 0, 0, 0.7);
+    border: 1px solid rgba(160, 33, 33, 0.4);
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.prey-area h3 {
+    font-family: Caudex, serif;
+    color: rgb(255, 120, 120);
+    margin: 0 0 15px 0;
+    border-bottom: 1px solid rgba(217, 74, 74, 0.3);
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.prey-stats p {
+    font-family: 'DM Mono';
+    color: #e0c4c4;
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+.prey-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+/* ======================================== */
+/* PLAYER HEADER */
+/* ======================================== */
+
+.player-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-right: 20px;
+    border-right: 1px solid rgba(217, 74, 74, 0.5);
+}
+
+.player-pic {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border: 1px solid rgba(217, 74, 74, 0.6);
+}
+
+.stat-bar h2 {
+    border-right: none;
+    padding-right: 0;
+}
+
+/* ======================================== */
+/* CREATURE METHODS - ACTION BUTTONS */
+/* ======================================== */
+
+.creature-methods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 30px auto;
+    max-width: 600px;
+}
+
+.creature-methods form {
+    display: contents;
+}
+
+.method-btn {
+    margin-top: 15px;
+    padding: 10px;
+    background: black;
+    mix-blend-mode: luminosity;
+    border: 1px dashed whitesmoke;
+    color: #eee;
+    font-family: Caudex, serif;
+    letter-spacing: 2px;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* ======================================== */
+/* BATTLEFIELD MECHANICS DOCUMENTATION */
+/* ======================================== */
+
+.battlefield-mechanics {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 40px 45px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #240909;
+    font-family: "Caudex", serif;
+    line-height: 1.75;
+}
+
+.battlefield-mechanics h1 {
+    margin: 0 0 25px;
+    font-family: "Caudex", serif;
+    font-size: 34px;
+    font-weight: 700;
+    color: white;
+    border-bottom: 3px solid #b31313;
+    padding-bottom: 15px;
+}
+
+.battlefield-mechanics h2 {
+    margin-top: 45px;
+    margin-bottom: 18px;
+    font-family: "Caudex", serif;
+    font-size: 27px;
+    font-weight: 700;
+    color: white;
+}
+
+.battlefield-mechanics h3 {
+    margin-top: 30px;
+    margin-bottom: 12px;
+    font-family: "Caudex", serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: white;
+}
+
+.battlefield-mechanics p {
+    margin: 14px 0;
+    font-family: "Caudex", serif;
+    font-size: 17px;
+    color: whitesmoke;
+}
+
+.battlefield-mechanics ol {
+    margin: 25px 0;
+    padding-left: 0;
+    list-style: none;
+    counter-reset: battlefield-step;
+}
+
+.battlefield-mechanics ol > li {
+    counter-increment: battlefield-step;
+    position: relative;
+    margin-bottom: 20px;
+    padding: 20px 25px 20px 65px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #e5bcbc;
+    font-size: 16px;
+}
+
+.battlefield-mechanics ol > li::before {
+    content: counter(battlefield-step);
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #a90f0f;
+    color: #ffffff;
+    border-radius: 50%;
+    font-family: "DM Mono", monospace;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.battlefield-mechanics ul {
+    margin-top: 12px;
+    padding-left: 25px;
+}
+
+.battlefield-mechanics ul li {
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+
+.battlefield-mechanics ul li::marker {
+    color: #a90f0f;
+}
+
+.battlefield-mechanics strong {
+    color: #8f1010;
+    font-weight: 700;
+}
+
+.battlefield-mechanics code {
+    padding: 3px 7px;
+    background: #f8eaea;
+    color: #9d1111;
+    border: 1px solid #e3b5b5;
+    border-radius: 4px;
+    font-family: "DM Mono", monospace;
+    font-size: 0.88em;
+}
+
+.battlefield-mechanics pre {
+    margin: 20px 0 28px;
+    padding: 22px;
+    background: #180707;
+    color: #ffffff;
+    border: 1px solid #8f1010;
+    overflow-x: auto;
+    box-shadow: 0 6px 18px rgba(80, 0, 0, 0.15);
+}
+
+.battlefield-mechanics pre code {
+    display: block;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-family: "DM Mono", monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre;
+}
+
+.battlefield-mechanics h2 code,
+.battlefield-mechanics h3 code {
+    background: #8f1010;
+    color: #ffffff;
+    border: none;
+    padding: 4px 8px;
+}
+
+.battlefield-mechanics hr {
+    margin: 30px 0;
+    border: none;
+    border-top: 1px solid #d9aaaa;
+}
+
+.battlefield-mechanics a {
+    color: #a90f0f;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.battlefield-mechanics a:hover {
+    color: #6e0808;
+    text-decoration: underline;
+}
+
+/* ======================================== */
+/* MODAL */
+/* ======================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: #1a0000;
+    border: 1px solid #a00;
+    padding: 2rem 3rem;
+    text-align: center;
+    color: #eee;
+    font-family: Caudex, serif;
+}
+
+/* ======================================== */
+/* PREPARE.PHP PAGE */
+/* ======================================== */
 
 .setup-wrapper {
     display: flex;
@@ -388,7 +684,7 @@ body{
     margin: 0 auto;
 }
 
-/* PRESET SECTION - FIXED */
+/* PRESET SECTION */
 .preset-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -406,7 +702,6 @@ body{
     justify-content: center;
     min-height: 120px;
     border: 3px dotted rgba(147, 3, 3, 0.3);
-    border-radius: 12px;
     background: rgba(0, 0, 0, 0.25);
     transition: border-color 0.3s ease, background 0.3s ease;
 }
@@ -484,146 +779,10 @@ body{
     background: rgba(160, 33, 33, 0.7);
 }
 
-.method-btn {
-    margin-top: 15px;
-    padding: 10px;
-    background: rgba(255, 181, 181, 0.45);
-    border: 1px dashed whitesmoke;
-    color: #eee;
-    font-family: Caudex, serif;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+/* ======================================== */
+/* HOME PAGE FIXES */
+/* ======================================== */
 
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.modal-box {
-    background: #1a0000;
-    border: 1px solid #a00;
-    padding: 2rem 3rem;
-    text-align: center;
-    color: #eee;
-    font-family: Caudex, serif;
-}
-/* --- New Layout Adjustments for Battle Log & Prey Area --- */
-
-.battlefield-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: stretch;
-    gap: 30px;
-    margin: 40px auto 0;
-    width: 90%;
-    max-width: 1200px;
-}
-
-/* Override existing combat-log to fit the flex layout */
-.combat-log {
-    width: 60%;
-    margin: 0; /* Removing the previous margin-left and margin-top */
-}
-
-/* Prey Area Styling */
-.prey-area {
-    width: 40%;
-    background: rgba(10, 0, 0, 0.7);
-    border: 1px solid rgba(160, 33, 33, 0.4);
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-}
-
-.prey-area h3 {
-    font-family: Caudex, serif;
-    color: rgb(255, 120, 120);
-    margin: 0 0 15px 0;
-    border-bottom: 1px solid rgba(217, 74, 74, 0.3);
-    padding-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-align: center;
-}
-
-.prey-stats p {
-    font-family: 'DM Mono';
-    color: #e0c4c4;
-    font-size: 14px;
-    margin: 8px 0;
-}
-
-.prey-actions {
-    margin-top: auto;
-    display: flex;
-    justify-content: center;
-    padding-top: 15px;
-}
-
-
-/* --- Player Stat Bar Adjustments --- */
-
-.player-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding-right: 20px;
-    border-right: 1px solid rgba(217, 74, 74, 0.5); /* Moved divider here */
-}
-
-.player-pic {
-    width: 45px;
-    height: 45px;
-    object-fit: cover;
-    border: 1px solid rgba(217, 74, 74, 0.6);
-    /* Strict: No border-radius applied */
-}
-
-/* Fix the original stat-bar h2 to prevent double borders */
-.stat-bar h2 {
-    border-right: none;
-    padding-right: 0;
-}
-
-.creature-methods {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin: 30px auto;
-    max-width: 600px; /* keeps the grid from stretching full page width */
-}
-
-.creature-methods form {
-    display: contents; /* makes the button inside act as a direct grid item */
-}
-
-.method-btn {
-    margin-top: 15px;
-    padding: 10px;
-    background: black;
-    mix-blend-mode:luminosity;
-    border: 1px dashed whitesmoke;
-    color: #eee;
-    font-family: Caudex, serif;
-    letter-spacing: 2px;
-    cursor: pointer;
-    width: 100%; /* fills its grid cell evenly */
-}
-
-/* --- Home Page Fixes --- */
 .home-container {
     display: flex;
     flex-direction: column;
@@ -648,4 +807,656 @@ body{
 .home-container .list-char {
     max-width: 800px;
     width: 100%;
+}
+
+/* ======================================== */
+/* RESPONSIVE - TABLETS AND SMALLER */
+/* ======================================== */
+
+@media (max-width: 1024px) {
+    .stat-bar {
+        gap: 10px;
+        padding: 12px 18px;
+    }
+
+    .stat-bar h2 {
+        font-size: 24px;
+        padding-right: 15px;
+    }
+
+    .creature-info h3 {
+        font-size: 13px;
+    }
+
+    .creature-info span {
+        font-size: 13px;
+    }
+
+    .battlefield-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .combat-log {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .prey-area {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .creature-methods {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 100%;
+        padding: 0 15px;
+    }
+
+    .setup-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding: 0 20px;
+    }
+
+    .setup-form {
+        width: 100%;
+        max-width: 480px;
+    }
+
+    .preset-section {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+}
+
+/* ======================================== */
+/* RESPONSIVE - MOBILE PHONES */
+/* ======================================== */
+
+@media (max-width: 768px) {
+    /* STAT BAR */
+    .stat-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 15px;
+        margin-top: 40px;
+    }
+
+    .stat-bar h2 {
+        font-size: 20px;
+        padding-right: 0;
+        border-right: none;
+        white-space: normal;
+    }
+
+    .player-header {
+        border-right: none;
+        padding-right: 0;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .player-pic {
+        width: 35px;
+        height: 35px;
+    }
+
+    .creature-info {
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(217, 74, 74, 0.15);
+        padding: 4px 0;
+    }
+
+    .creature-info h3 {
+        font-size: 12px;
+        white-space: normal;
+    }
+
+    .creature-info span {
+        font-size: 12px;
+    }
+
+    /* INTRO TEXT */
+    .intro-text h2 {
+        font-size: 36px;
+        letter-spacing: -2px;
+    }
+
+    .intro-text p {
+        font-size: 14px;
+    }
+
+    /* BATTLEFIELD */
+    .battlefield-container {
+        width: 95%;
+        gap: 15px;
+        margin: 20px auto 0;
+    }
+
+    .combat-log {
+        padding: 15px;
+    }
+
+    .combat-log h3 {
+        font-size: 16px;
+    }
+
+    .log-entries {
+        height: 120px;
+    }
+
+    .log-entries p {
+        font-size: 12px;
+    }
+
+    .prey-area {
+        padding: 15px;
+    }
+
+    .prey-area h3 {
+        font-size: 16px;
+    }
+
+    .prey-stats p {
+        font-size: 12px;
+    }
+
+    /* ACTION BUTTONS */
+    .creature-methods {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin: 20px auto;
+        padding: 0 10px;
+    }
+
+    .method-btn {
+        font-size: 12px;
+        padding: 8px;
+        margin-top: 10px;
+    }
+
+    /* MODAL */
+    .modal-box {
+        padding: 1.5rem 2rem;
+        margin: 0 15px;
+    }
+
+    .modal-box p {
+        font-size: 16px;
+    }
+
+    /* BATTLEFIELD MECHANICS */
+    .battlefield-mechanics {
+        margin: 20px 12px;
+        padding: 25px 20px;
+        border-radius: 10px;
+    }
+
+    .battlefield-mechanics h1 {
+        font-size: 27px;
+    }
+
+    .battlefield-mechanics h2 {
+        font-size: 23px;
+    }
+
+    .battlefield-mechanics h3 {
+        font-size: 19px;
+    }
+
+    .battlefield-mechanics p {
+        font-size: 16px;
+    }
+
+    .battlefield-mechanics ol > li {
+        padding: 18px 15px 18px 55px;
+        font-size: 14px;
+    }
+
+    .battlefield-mechanics pre {
+        padding: 15px;
+    }
+
+    .battlefield-mechanics pre code {
+        font-size: 12px;
+    }
+
+    /* PREPARE PAGE */
+    .setup-wrapper {
+        gap: 20px;
+        padding: 0 15px;
+        margin-top: 30px;
+    }
+
+    .setup-pic .creature-img {
+        width: 150px;
+        height: 220px;
+    }
+
+    .setup-form {
+        gap: 12px;
+    }
+
+    .preset-section {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 12px;
+    }
+
+    .preset-section .char-card {
+        padding: 12px 10px;
+        min-height: 80px;
+    }
+
+    .preset-section .char-name {
+        font-size: 16px;
+    }
+
+    .preset-section .char-info {
+        font-size: 11px;
+    }
+
+    .field label {
+        font-size: 12px;
+    }
+
+    .field input {
+        padding: 6px 8px;
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .how-to-play {
+        padding: 15px 18px;
+        font-size: 13px;
+    }
+
+    .how-to-play ol {
+        font-size: 13px;
+        padding-left: 15px;
+    }
+
+    /* HOME PAGE */
+    .home-container {
+        min-height: auto;
+        padding: 15px;
+    }
+
+    .home-container .intro-text {
+        padding: 0 10px;
+    }
+
+    .home-container .how-to-play {
+        padding: 15px;
+    }
+
+    .welcome {
+        margin-top: 30px;
+    }
+
+    .welcome a {
+        font-size: 14px;
+        word-spacing: 5px;
+        letter-spacing: 5px;
+        bottom: 25px;
+    }
+}
+
+/* ======================================== */
+/* RESPONSIVE - VERY SMALL PHONES */
+/* ======================================== */
+
+@media (max-width: 480px) {
+    .stat-bar h2 {
+        font-size: 17px;
+    }
+
+    .intro-text h2 {
+        font-size: 28px;
+    }
+
+    .intro-text p {
+        font-size: 13px;
+    }
+
+    .creature-methods {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .method-btn {
+        font-size: 10px;
+        padding: 6px;
+        letter-spacing: 1px;
+    }
+
+    .preset-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .preset-section .char-card {
+        padding: 10px 8px;
+        min-height: 70px;
+    }
+
+    .preset-section .char-name {
+        font-size: 14px;
+    }
+
+    .preset-section .char-info {
+        font-size: 10px;
+    }
+
+    .setup-pic .creature-img {
+        width: 120px;
+        height: 180px;
+    }
+
+    .combat-log {
+        padding: 10px;
+    }
+
+    .log-entries {
+        height: 100px;
+    }
+
+    .log-entries p {
+        font-size: 10px;
+    }
+
+    .prey-area {
+        padding: 10px;
+    }
+
+    .prey-area h3 {
+        font-size: 14px;
+    }
+
+    .prey-stats p {
+        font-size: 11px;
+    }
+
+    .modal-box {
+        padding: 1rem 1.5rem;
+    }
+
+    .modal-box p {
+        font-size: 14px;
+    }
+
+    .battlefield-mechanics {
+        padding: 15px;
+        margin: 10px 8px;
+    }
+
+    .battlefield-mechanics h1 {
+        font-size: 22px;
+    }
+
+    .battlefield-mechanics h2 {
+        font-size: 19px;
+    }
+
+    .battlefield-mechanics h3 {
+        font-size: 17px;
+    }
+
+    .battlefield-mechanics p {
+        font-size: 14px;
+    }
+
+    .battlefield-mechanics ol > li {
+        padding: 14px 12px 14px 45px;
+        font-size: 13px;
+    }
+
+    .battlefield-mechanics ol > li::before {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+        left: 12px;
+        top: 14px;
+    }
+}
+
+/* ========================================
+   CLASS MECHANICS - EDUCATIONAL SECTION
+   ======================================== */
+
+.class-mechanics {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 40px 45px;
+
+    background-color: rgba(0, 0, 0, 0.7);
+    color: whitesmoke;
+
+    font-family: "Caudex", serif;
+    line-height: 1.75;
+}
+
+
+/* ========================================
+   MAIN TITLE
+   ======================================== */
+
+.class-mechanics h2 {
+    margin: 0 0 30px;
+
+    font-family: "Caudex", serif;
+    font-size: 30px;
+    font-weight: 700;
+
+    color: white;
+
+    border-bottom: 3px solid #b31313;
+    padding-bottom: 15px;
+}
+
+
+/* ========================================
+   CREATURE EXPLANATION CARD
+   ======================================== */
+
+.class-explanation {
+    margin: 25px 0;
+    padding: 25px 30px;
+
+    background-color: rgba(255, 255, 255, 0.9);
+
+    border: 1px solid #b31313;
+    border-left: 6px solid #a90f0f;
+
+    color: #240909;
+}
+
+
+/* ========================================
+   CREATURE NAME
+   ======================================== */
+
+.class-explanation h3 {
+    margin: 0 0 20px;
+
+    font-family: "Caudex", serif;
+    font-size: 25px;
+    font-weight: 700;
+
+    color: #8f1010;
+
+    border-bottom: 1px solid #d9aaaa;
+    padding-bottom: 10px;
+}
+
+
+/* ========================================
+   DESCRIPTION TEXT
+   ======================================== */
+
+.class-explanation p {
+    margin: 12px 0;
+
+    font-family: "Caudex", serif;
+    font-size: 16px;
+
+    color: #321010;
+}
+
+.class-explanation p strong {
+    color: #8f1010;
+}
+
+
+/* ========================================
+   LISTS
+   ======================================== */
+
+.class-explanation ul {
+    margin: 10px 0 20px;
+    padding-left: 28px;
+}
+
+.class-explanation li {
+    margin-bottom: 9px;
+
+    font-family: "Caudex", serif;
+    font-size: 15.5px;
+
+    color: #321010;
+}
+
+.class-explanation li::marker {
+    color: #a90f0f;
+}
+
+
+/* ========================================
+   NESTED LISTS
+   ======================================== */
+
+.class-explanation ul ul {
+    margin-top: 8px;
+    margin-bottom: 10px;
+    padding-left: 25px;
+}
+
+.class-explanation ul ul li {
+    margin-bottom: 6px;
+}
+
+
+/* ========================================
+   BOLD TEXT
+   ======================================== */
+
+.class-explanation strong {
+    color: #8f1010;
+    font-weight: 700;
+}
+
+
+/* ========================================
+   INLINE PHP / CODE
+   ======================================== */
+
+.class-explanation code {
+    padding: 3px 7px;
+
+    background-color: #f8eaea;
+    color: #9d1111;
+
+    border: 1px solid #e3b5b5;
+    border-radius: 4px;
+
+    font-family: "DM Mono", monospace;
+    font-size: 0.85em;
+}
+
+
+/* ========================================
+   CODE INSIDE STRONG TEXT
+   ======================================== */
+
+.class-explanation strong code {
+    color: #9d1111;
+    background-color: #f8eaea;
+}
+
+
+/* ========================================
+   ABILITY / OOP SECTION SPACING
+   ======================================== */
+
+.class-explanation p + ul {
+    margin-top: 5px;
+}
+
+.class-explanation li strong {
+    color: #8f1010;
+}
+
+
+/* ========================================
+   HOVER EFFECT
+   ======================================== */
+
+.class-explanation {
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
+}
+
+.class-explanation:hover {
+    transform: translateY(-2px);
+
+    border-color: #d01919;
+
+    box-shadow: 0 8px 20px rgba(140, 0, 0, 0.18);
+}
+
+
+/* ========================================
+   MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+
+    .class-mechanics {
+        margin: 20px 12px;
+        padding: 25px 20px;
+    }
+
+    .class-mechanics h2 {
+        font-size: 25px;
+    }
+
+    .class-explanation {
+        padding: 20px;
+    }
+
+    .class-explanation h3 {
+        font-size: 22px;
+    }
+
+    .class-explanation p {
+        font-size: 15px;
+    }
+
+    .class-explanation li {
+        font-size: 14px;
+    }
+
+    .class-explanation ul {
+        padding-left: 22px;
+    }
 }

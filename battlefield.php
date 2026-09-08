@@ -407,7 +407,9 @@ if (!isset($_SESSION['battlelog'])) {
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="icon" type="image/png" href="https://png.pngtree.com/png-clipart/20250123/original/pngtree-blood-moon-png-image_20325627.png">
     <link rel="stylesheet" href="style.css">
+    <title>php practice by crimsoncrows</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
@@ -781,6 +783,9 @@ if (!isset($_SESSION['battlelog'])) {
         </div>
     <?php endif; ?>
 
+
+
+
     <!-- ============================================= -->
     <!-- 12. JAVASCRIPT - AUTO-SCROLL BATTLE LOG -->
     <!-- ============================================= -->
@@ -793,6 +798,9 @@ if (!isset($_SESSION['battlelog'])) {
             }
         });
     </script>
+
+
+
 
 </body>
 </html>
