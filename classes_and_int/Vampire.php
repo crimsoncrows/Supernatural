@@ -290,7 +290,7 @@ $defaultVampire = new Vampire(
 // ---- ANCIENT VAMPIRE ----
 // A legendary vampire of immense power
 $ancientVampire = new Vampire(
-    'Dracula', 800, 60, 'Blood Magic', 95.0, 130.0,
+    'Dracula', 800, 60, 'Blood Magic', 95.0, 100.0,
     120.0, 100.0
 );
 

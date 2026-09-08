@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                     (int)($_POST['humanEncounters'] ?? 0),
                     $_POST['ability'] ?? '',
                     (float)($_POST['skillLevel'] ?? 0),
-                    (float)($_POST['healthLevel'] ?? 0),
+                    ($_POST['healthLevel'] ?? '') !== '' ? (float)$_POST['healthLevel'] : 100.0,
                     (float)($_POST['corruptionLevel'] ?? 50.0),
                     (int)($_POST['pactCount'] ?? 0),
                     $_POST['fearAura'] ?? 'Low'
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                     (int)($_POST['humanEncounters'] ?? 0),
                     $_POST['ability'] ?? '',
                     (float)($_POST['skillLevel'] ?? 0),
-                    (float)($_POST['healthLevel'] ?? 0),
+                    ($_POST['healthLevel'] ?? '') !== '' ? (float)$_POST['healthLevel'] : 100.0,
                     (float)($_POST['bloodDrank'] ?? 0.0),
                     (float)($_POST['biteForce'] ?? 75.5)
             );
@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                     (int)($_POST['humanEncounters'] ?? 0),
                     $_POST['ability'] ?? '',
                     (float)($_POST['skillLevel'] ?? 0),
-                    (float)($_POST['healthLevel'] ?? 0),
+                    ($_POST['healthLevel'] ?? '') !== '' ? (float)$_POST['healthLevel'] : 100.0,
                     (int)($_POST['soulsCollected'] ?? 0),
                     (float)($_POST['realmPower'] ?? 30.0),
                     (int)($_POST['minionCount'] ?? 0)
@@ -190,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                     (int)($_POST['humanEncounters'] ?? 0),
                     $_POST['ability'] ?? '',
                     (float)($_POST['skillLevel'] ?? 0),
-                    (float)($_POST['healthLevel'] ?? 0),
+                    ($_POST['healthLevel'] ?? '') !== '' ? (float)$_POST['healthLevel'] : 100.0,
                     (float)($_POST['divinityLevel'] ?? 100.0),
                     $_POST['aura'] ?? 'Radiant'
             );
@@ -224,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                     (int)($_POST['humanEncounters'] ?? 0),
                     $_POST['ability'] ?? '',
                     (float)($_POST['skillLevel'] ?? 0),
-                    (float)($_POST['healthLevel'] ?? 0),
+                    ($_POST['healthLevel'] ?? '') !== '' ? (float)$_POST['healthLevel'] : 100.0,
                     (float)($_POST['divinityLevel'] ?? 50.0),
                     (int)($_POST['wingsCount'] ?? 6)
             );
@@ -258,7 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                     (int)($_POST['humanEncounters'] ?? 0),
                     $_POST['ability'] ?? '',
                     (float)($_POST['skillLevel'] ?? 0),
-                    (float)($_POST['healthLevel'] ?? 0),
+                    ($_POST['healthLevel'] ?? '') !== '' ? (float)$_POST['healthLevel'] : 100.0,
                     (float)($_POST['ferocity'] ?? 50.0)
             );
         }

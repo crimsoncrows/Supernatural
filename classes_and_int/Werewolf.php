@@ -184,7 +184,7 @@ $defaultWerewolf = new Werewolf(
 );
 
 $ancientWerewolf = new Werewolf(
-    'Greyback', 500, 45, 'Alpha Howl', 92.0, 130.0,
+    'Greyback', 500, 45, 'Alpha Howl', 92.0, 100.0,
     95.0
 );
 

@@ -222,11 +222,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         // ---- PREY ATTACKS BACK ----
         if (isset($prey) && $prey instanceof Prey && $prey->getPreyHealth() > 0) {
+            // Sync prey mood from session BEFORE attacking (in case Netherlord just changed it)
+            $prey->setPreyMood($_SESSION['prey_mood']);
+
             $preyLogEntry = $prey->attack($creature);
             $prey->battleLog($preyLogEntry);
-
-            // Update prey mood from session (in case Netherlord changed it)
-            $prey->setPreyMood($_SESSION['prey_mood']);
             // DO NOT overwrite prey health - the creature's attack already updated it!
         }
     }
@@ -333,6 +333,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $logEntry = $creature->chase($prey);
         } elseif ($_POST['action'] === 'pounce') {
             $logEntry = $creature->pounce($prey);
+        } elseif ($_POST['action'] === 'attack') {
+            $logEntry = $creature->attack($prey);
         }
 
         if ($logEntry !== '') {
@@ -733,6 +735,11 @@ if (!isset($_SESSION['battlelog'])) {
             <form method="POST" action="battlefield.php">
                 <input type="hidden" name="action" value="pounce">
                 <button type="submit" class="method-btn">Pounce</button>
+            </form>
+
+            <form method="POST" action="battlefield.php">
+                <input type="hidden" name="action" value="attack">
+                <button type="submit" class="method-btn">Attack</button>
             </form>
         <?php } ?>
 

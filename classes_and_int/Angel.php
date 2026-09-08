@@ -186,7 +186,7 @@ $defaultAngel = new Angel(
 // ---- ANCIENT ANGEL ----
 // A legendary angel with immense power
 $ancientAngel = new Angel(
-    'Michael', 5000, 60, 'Heavenly Judgement', 95.0, 140.0,
+    'Michael', 5000, 60, 'Heavenly Judgement', 95.0, 100.0,
     95.0, 'Overwhelming'
 );
 

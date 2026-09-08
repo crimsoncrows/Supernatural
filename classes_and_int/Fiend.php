@@ -201,7 +201,7 @@ $defaultFiend = new Fiend(
 // ---- ANCIENT FIEND ----
 // A legendary fiend of immense power
 $ancientFiend = new Fiend(
-    'Elisius', 1200, 47, 'Soul Rending', 98.0, 140.0,
+    'Elisius', 1200, 47, 'Soul Rending', 98.0, 100.0,
     92.0, 38, 'Overwhelming'
 );
 

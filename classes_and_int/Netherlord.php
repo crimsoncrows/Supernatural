@@ -261,7 +261,7 @@ class Netherlord extends Supernatural implements FlyandChange
             $minionBonus = $this->getMinionCount() * 0.5;
             $totalPower = $power + $minionBonus;
 
-            $this->setHealthLevel(max(0, $this->getHealthLevel() + rand(3, 8)));
+            $this->setHealthLevel(min(100, $this->getHealthLevel() + rand(3, 8)));
             $this->setRealmPower($this->getRealmPower() + rand(1, 3));
 
             $prey->setPreyHealth(max(0, $prey->getPreyHealth() - $totalPower));
@@ -296,7 +296,7 @@ $defaultNetherlord = new Netherlord(
 // ---- ANCIENT NETHERLORD ----
 // A legendary netherlord of immense power
 $ancientNetherlord = new Netherlord(
-    'Xal\'vath', 1500, 60, 'Void Mastery', 95.0, 140.0,
+    'Xal\'vath', 1500, 60, 'Void Mastery', 95.0, 100.0,
     250, 85.0, 45
 );
 

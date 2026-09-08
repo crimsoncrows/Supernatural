@@ -199,7 +199,7 @@ $defaultSeraphim = new Seraphim(
 // ---- ANCIENT SERAPHIM ----
 // A legendary seraphim with immense power
 $ancientSeraphim = new Seraphim(
-    'Metatron', 5000, 60, 'Eternal Glory', 95.0, 140.0,
+    'Metatron', 5000, 60, 'Eternal Glory', 95.0, 100.0,
     95.0, 12
 );
 
