@@ -251,7 +251,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $logEntry = '';
 
         if ($_POST['action'] === 'eat') {
-            $logEntry = $creature->eatSoul($prey);
+            $logEntry = $creature->drainSoul($prey);
         } elseif ($_POST['action'] === 'deal') {
             $logEntry = $creature->createPact();
         }
@@ -655,7 +655,7 @@ if (!isset($_SESSION['battlelog'])) {
             if ($creature->getHealthLevel() <= 20 && $creature->getSkillLevel() >= 80) { ?>
                 <form method="POST" action="battlefield.php">
                     <input type="hidden" name="action" value="eat">
-                    <button type="submit" class="method-btn">Eat Soul</button>
+                    <button type="submit" class="method-btn">Drain Soul</button>
                 </form>
             <?php }
 

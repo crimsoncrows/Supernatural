@@ -1,32 +1,20 @@
 <?php
 
-// =============================================
-// 1. REQUIRE DEPENDENCIES
-// =============================================
-
+// REQUIRE DEPENDENCIES (parent, interface and trait)
 require_once 'Supernatural.php';
 require_once 'FlyandChange.php';
 require_once 'Logger.php';
 
-// =============================================
-// 2. CLASS DECLARATION
-// =============================================
-
+//class declaration
 class Angel extends Supernatural implements FlyandChange
 {
     use Logger;
 
-    // =============================================
-    // 3. PROPERTIES
-    // =============================================
-
+    // PROPERTIES exclusive to angel
     private float $divinityLevel;
     private string $aura;
 
-    // =============================================
-    // 4. CONSTRUCTORS
-    // =============================================
-
+    //constructor (with parent constructor)
     public function __construct(
         $name = "",
         $age = 0,
@@ -43,34 +31,15 @@ class Angel extends Supernatural implements FlyandChange
         $this->aura = $aura;
     }
 
-    // =============================================
-    // 5. ATTRIBUTE ACCESS (GETTERS & SETTERS)
-    // =============================================
+    //get set
+    public function getDivinityLevel() { return $this->divinityLevel; }
+    public function setDivinityLevel($divinityLevel){ $this->divinityLevel = max(0, $divinityLevel); }
 
-    public function getDivinityLevel()
-    {
-        return $this->divinityLevel;
-    }
+    public function getAura() { return $this->aura; }
+    public function setAura($aura){ $this->aura = $aura; }
 
-    public function setDivinityLevel($divinityLevel)
-    {
-        $this->divinityLevel = max(0, $divinityLevel);
-    }
 
-    public function getAura()
-    {
-        return $this->aura;
-    }
-
-    public function setAura($aura)
-    {
-        $this->aura = $aura;
-    }
-
-    // =============================================
-    // 6. OVERRIDDEN ABSTRACT METHODS (from Supernatural)
-    // =============================================
-
+    //OVERRIDDEN ABSTRACT METHODS (from Supernatural)
     public function performSkill()
     {
         $this->setSkillLevel($this->getSkillLevel() + 5);
@@ -84,10 +53,7 @@ class Angel extends Supernatural implements FlyandChange
         return $this->getName() . " descends to the human realm to guide lost souls.";
     }
 
-    // =============================================
-    // 7. ANGEL METHODS
-    // =============================================
-
+    //ANGEL METHODS
     public function healPrey($prey, $healAmount)
     {
         // 20% chance to redeem the prey (set mood to "redeemed" and vitality to 0)
@@ -100,7 +66,8 @@ class Angel extends Supernatural implements FlyandChange
 
             $this->setSkillLevel($this->getSkillLevel() + 5);
             return $this->getName() . " attempts to heal " . $prey->getPreyName() .
-                " and SUCCEEDS! " . $prey->getPreyName() . " is REDEEMED! Vitality reduced to 0!";
+                " and SUCCEEDS! " . $prey->getPreyName() . " is REDEEMED!";
+
         } else {
             // Failed attempt - prey remains unchanged
             $this->setSkillLevel($this->getSkillLevel() + 5);
@@ -111,23 +78,19 @@ class Angel extends Supernatural implements FlyandChange
 
     public function blessPrey($prey, $blessing)
     {
-        // Reduce prey health by 3-8
+        // Reduce cursed prey health by 3-8 after being blessed
         $damage = rand(3, 8);
         $newHealth = $prey->getPreyHealth() - $damage;
         $prey->setPreyHealth(max(0, $newHealth));
-
-        // Update session
         $_SESSION['prey_health'] = $prey->getPreyHealth();
 
+        //add divinity level after blessing
         $this->setDivinityLevel($this->getDivinityLevel() + 10);
         return $this->getName() . " blesses " . $prey->getPreyName() .
             " with: " . $blessing . "! " . $prey->getPreyName() . " takes " . $damage . " damage!";
     }
 
-    // =============================================
-    // 8. FLYANDCHANGE INTERFACE METHODS
-    // =============================================
-
+    //FLYANDCHANGE INTERFACE METHODS
     public function fly()
     {
         return $this->getName() . " soars gracefully through the skies.";
@@ -135,6 +98,14 @@ class Angel extends Supernatural implements FlyandChange
 
     public function spawn()
     {
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - 0.75));
+
+        // 0.5% chance to spawn a malicious demon pretending to be an angel
+        if (rand(1, 1000) <= 5) {
+            $this->setHealthLevel(max(0, $this->getHealthLevel() - 40));
+            return "Bad health drop!! " . $this->getName() . " attempted to spawn a guardian, but a malicious demon slipped through disguised as an angel!";
+        }
+
         return $this->getName() . " spawns a protective guardian to shield the prey.";
     }
 
@@ -145,15 +116,13 @@ class Angel extends Supernatural implements FlyandChange
 
     public function morph()
     {
-        return $this->getName() . " morphs into a radiant form, inspiring hope in prey.";
+        $morphTypes = ["seraph", "white dove", "pillar of light", "winged flame", "cherub", "watcher", "herald", "veiled figure", "robed elder", "child of light", "wandering pilgrim", "blind prophet", "silent choir", "star-eyed stranger", "old priest", "barefoot orphan"];
+        $morphedInto = $morphTypes[array_rand($morphTypes)];
+        return $this->getName() . " morphs into a radiant form, inspiring hope in prey. " . $this->getName() . " is now a " .$morphedInto .".";
     }
-
-    // =============================================
-    // 9. ATTACK METHOD (for FlyandChange interface)
-    // =============================================
-
     public function attack($prey)
     {
+        //random attack number from 5-15 power. gains a little divinity when warding off demon
         if ($prey !== null) {
             $power = rand(5, 15);
             $prey->setPreyHealth(max(0, $prey->getPreyHealth() - $power));
@@ -165,9 +134,7 @@ class Angel extends Supernatural implements FlyandChange
     }
 }
 
-// =============================================
-// 10. ANGEL PRESETS / INSTANCES
-// =============================================
+//ANGEL PRESETS / INSTANCES
 
 // ---- YOUNG ANGEL ----
 // A novice angel with low divinity
@@ -190,10 +157,7 @@ $ancientAngel = new Angel(
     95.0, 'Overwhelming'
 );
 
-// =============================================
-// 11. ANGEL COLLECTION
-// =============================================
-
+// ANGEL COLLECTION
 $angelCollection = [
     $youngAngel,
     $defaultAngel,

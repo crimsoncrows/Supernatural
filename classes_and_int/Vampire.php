@@ -1,25 +1,16 @@
 <?php
+// 1. REQUIRE DEPENDENCIES (parent, interface and trait)
+    require_once 'Supernatural.php';
+    require_once 'Nocturnal.php';
+    require_once 'Logger.php';
 
-// =============================================
-// 1. REQUIRE DEPENDENCIES
-// =============================================
 
-require_once 'Supernatural.php';
-require_once 'Nocturnal.php';
-require_once 'Logger.php';
-
-// =============================================
 // 2. CLASS DECLARATION
-// =============================================
-
 class Vampire extends Supernatural implements Nocturnal
 {
     use Logger;
 
-    // =============================================
-    // 3. PROPERTIES
-    // =============================================
-
+    //properties exclusive for vampire only
     private float $bloodDrank;
     private float $biteForce;
     private string $mood;

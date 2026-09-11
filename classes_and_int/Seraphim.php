@@ -1,32 +1,21 @@
 <?php
 
-// =============================================
-// 1. REQUIRE DEPENDENCIES
-// =============================================
-
+//REQUIRE DEPENDENCIES
 require_once 'Angel.php';
 require_once 'FlyandChange.php';
 require_once 'Logger.php';
 
-// =============================================
-// 2. CLASS DECLARATION
-// =============================================
-
-class Seraphim extends Angel  // REMOVED: implements FlyandChange (already inherited from Angel)
+//CLASS DECLARATION
+class Seraphim extends Angel
 {
     use Logger;
 
-    // =============================================
-    // 3. PROPERTIES
-    // =============================================
 
+    // PROPERTIES
     private int $wingsCount;
     private int $flyCount;
 
-    // =============================================
-    // 4. CONSTRUCTORS
-    // =============================================
-
+    //CONSTRUCTORS
     public function __construct(
         $name = "",
         $age = 0,
@@ -43,9 +32,8 @@ class Seraphim extends Angel  // REMOVED: implements FlyandChange (already inher
         $this->flyCount = 0;
     }
 
-    // =============================================
-    // 5. ATTRIBUTE ACCESS (GETTERS & SETTERS)
-    // =============================================
+
+    // ATTRIBUTE ACCESS (GETTERS & SETTERS)
 
     public function getWingsCount()
     {
@@ -67,20 +55,23 @@ class Seraphim extends Angel  // REMOVED: implements FlyandChange (already inher
         $this->flyCount = max(0, $flyCount);
     }
 
-    // =============================================
-    // 6. OVERRIDDEN ABSTRACT METHODS (from Supernatural)
-    // =============================================
+    // OVERRIDDEN ABSTRACT METHODS (from Supernatural)
 
     public function performSkill()
     {
+        //weak performance boost if low health level
         if ($this->getHealthLevel() <= 20) {
             $this->setSkillLevel($this->getSkillLevel() + rand(1, 5));
             return $this->getName() . " tries to perform " . $this->getAbility() .
                 " with skill level " . $this->getSkillLevel() . ".";
+
+            //moderate performance boost if moderate health level
         } elseif ($this->getHealthLevel() <= 40) {
             $this->setSkillLevel($this->getSkillLevel() + rand(5, 10));
             return $this->getName() . " performs " . $this->getAbility() .
                 " with skill level " . $this->getSkillLevel() . ".";
+
+            //high performance boost if high health level
         } else {
             $this->setSkillLevel($this->getSkillLevel() + rand(10, 20));
             return $this->getName() . " unleashes " . $this->getAbility() .
@@ -90,15 +81,13 @@ class Seraphim extends Angel  // REMOVED: implements FlyandChange (already inher
 
     public function goForExpedition()
     {
+        //adds encounters and loses a little energy from guarding
         $this->setHumanEncounters($this->getHumanEncounters() + 1);
         $this->setHealthLevel(max(0, $this->getHealthLevel() - 0.5));
         return $this->getName() . " descends from the heavens to watch over mortals.";
     }
 
-    // =============================================
-    // 7. FLYANDCHANGE INTERFACE METHODS
-    // =============================================
-
+    // FLYANDCHANGE INTERFACE METHODS
     public function fly()
     {
         $this->setHealthLevel(max(0, $this->getHealthLevel() - 1));
@@ -109,10 +98,16 @@ class Seraphim extends Angel  // REMOVED: implements FlyandChange (already inher
         // Flying too much - chance to fly too close to the sun (KILLS the Seraphim)
         if ($this->getFlyCount() >= 3 && rand(1, 100) <= 30) {
             $this->setHealthLevel(0);
-            $log .= " " . $this->getName() . " flew too close to the sun and perished!";
+            $log .= " Oh No! " . $this->getName() . " flew too close to the sun and perished!";
             $this->setFlyCount(0);
         }
 
+        // potential to die and fall due to low health
+        if ($this->getHealthLevel() <= 10 && rand(1, 100) <= 10) {
+            $this->setHealthLevel(0);
+            $log .= " Ouch... " . $this->getName() . " flew but fell due to extreme health weakness!";
+            $this->setFlyCount(0);
+        }
         return $log;
     }
 

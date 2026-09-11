@@ -6,5 +6,9 @@ interface FlyandChange{
     public function spawn();
     public function teleport();
 
+    public function morph();
+
+    public function attack($prey);
+
 
 }

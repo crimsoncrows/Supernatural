@@ -1,33 +1,21 @@
 <?php
 
-// =============================================
-// 1. REQUIRE DEPENDENCIES
-// =============================================
-
+//REQUIRE DEPENDENCIES
 require_once 'Supernatural.php';
 require_once 'FlyandChange.php';
 require_once 'Logger.php';
 
-// =============================================
-// 2. CLASS DECLARATION
-// =============================================
-
+//CLASS DECLARATION
 class Netherlord extends Supernatural implements FlyandChange
 {
     use Logger;
 
-    // =============================================
-    // 3. PROPERTIES
-    // =============================================
-
+    // PROPERTIES
     private int $soulsCollected;
     private float $realmPower;
     private int $minionCount;
 
-    // =============================================
-    // 4. CONSTRUCTORS
-    // =============================================
-
+    //CONSTRUCTORS
     public function __construct(
         $name = "",
         $age = 0,
@@ -46,9 +34,7 @@ class Netherlord extends Supernatural implements FlyandChange
         $this->minionCount = $minionCount;
     }
 
-    // =============================================
-    // 5. ATTRIBUTE ACCESS (GETTERS & SETTERS)
-    // =============================================
+    // ATTRIBUTE ACCESS (GETTERS & SETTERS)
 
     public function getSoulsCollected()
     {
@@ -80,9 +66,7 @@ class Netherlord extends Supernatural implements FlyandChange
         $this->minionCount = max(0, $minionCount);
     }
 
-    // =============================================
-    // 6. OVERRIDDEN ABSTRACT METHODS (from Supernatural)
-    // =============================================
+    // OVERRIDDEN ABSTRACT METHODS (from Supernatural)
 
     public function performSkill()
     {
@@ -110,10 +94,7 @@ class Netherlord extends Supernatural implements FlyandChange
         return $this->getName() . " roams through the nether realms, seeking new souls to command.";
     }
 
-    // =============================================
-    // 7. FLYANDCHANGE INTERFACE METHODS
-    // =============================================
-
+    // FLYANDCHANGE INTERFACE METHODS
     public function fly()
     {
         $this->setHealthLevel(max(0, $this->getHealthLevel() - 1));
@@ -187,10 +168,7 @@ class Netherlord extends Supernatural implements FlyandChange
         return $log;
     }
 
-    // =============================================
-    // 8. NETHERLORD UNIQUE ABILITIES
-    // =============================================
-
+    //NETHERLORD UNIQUE ABILITIES
     public function collectSoul($prey)
     {
         if ($prey !== null && $prey->getPreyHealth() > 0) {
@@ -247,9 +225,7 @@ class Netherlord extends Supernatural implements FlyandChange
         }
     }
 
-    // =============================================
-    // 9. ATTACK METHOD (for FlyandChange interface)
-    // =============================================
+    //ATTACK METHOD (for FlyandChange interface)
 
     public function attack($prey)
     {
@@ -275,9 +251,7 @@ class Netherlord extends Supernatural implements FlyandChange
     }
 }
 
-// =============================================
-// 10. NETHERLORD PRESETS / INSTANCES
-// =============================================
+// NETHERLORD PRESETS / INSTANCES
 
 // ---- YOUNG NETHERLORD ----
 // A fledgling netherlord with a small domain
