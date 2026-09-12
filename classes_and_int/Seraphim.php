@@ -10,6 +10,45 @@ class Seraphim extends Angel
 {
     use Logger;
 
+    // PERFORM SKILL THRESHOLDS & BOOSTS
+    private const SKILL_LOW_HEALTH_THRESHOLD = 20;
+    private const SKILL_MODERATE_HEALTH_THRESHOLD = 40;
+    private const SKILL_BOOST_LOW_MIN = 1;
+    private const SKILL_BOOST_LOW_MAX = 5;
+    private const SKILL_BOOST_MODERATE_MIN = 5;
+    private const SKILL_BOOST_MODERATE_MAX = 10;
+    private const SKILL_BOOST_HIGH_MIN = 10;
+    private const SKILL_BOOST_HIGH_MAX = 20;
+
+    // HEALTH COSTS
+    private const EXPEDITION_HEALTH_COST = 0.5;
+    private const FLY_HEALTH_COST = 1;
+    private const SPAWN_HEALTH_COST = 0.75;
+    private const TELEPORT_HEALTH_COST = 1;
+
+    // FLY — SUN & FALL RISK
+    private const FLY_SUN_DEATH_MIN_COUNT = 3;
+    private const FLY_SUN_DEATH_CHANCE_PER_100 = 30;
+    private const FLY_LOW_HEALTH_THRESHOLD = 10;
+    private const FLY_FALL_DEATH_CHANCE_PER_100 = 10;
+
+    // REVEAL GLORY
+    private const GLORY_FAINT_CHANCE_PER_100 = 30;
+    private const GLORY_DIVINITY_COST_MIN = 3;
+    private const GLORY_DIVINITY_COST_MAX = 8;
+
+    // HEAL
+    private const HEAL_AMOUNT_MIN = 10;
+    private const HEAL_AMOUNT_MAX = 20;
+    private const HEAL_HEALTH_CAP = 100;
+    private const HEAL_DIVINITY_COST_MIN = 2;
+    private const HEAL_DIVINITY_COST_MAX = 5;
+
+    // BLESS
+    private const BLESS_SKILL_BOOST_MIN = 5;
+    private const BLESS_SKILL_BOOST_MAX = 15;
+    private const BLESS_DIVINITY_COST_MIN = 1;
+    private const BLESS_DIVINITY_COST_MAX = 3;
 
     // PROPERTIES
     private int $wingsCount;
@@ -60,20 +99,20 @@ class Seraphim extends Angel
     public function performSkill()
     {
         //weak performance boost if low health level
-        if ($this->getHealthLevel() <= 20) {
-            $this->setSkillLevel($this->getSkillLevel() + rand(1, 5));
+        if ($this->getHealthLevel() <= self::SKILL_LOW_HEALTH_THRESHOLD) {
+            $this->setSkillLevel($this->getSkillLevel() + rand(self::SKILL_BOOST_LOW_MIN, self::SKILL_BOOST_LOW_MAX));
             return $this->getName() . " tries to perform " . $this->getAbility() .
                 " with skill level " . $this->getSkillLevel() . ".";
 
             //moderate performance boost if moderate health level
-        } elseif ($this->getHealthLevel() <= 40) {
-            $this->setSkillLevel($this->getSkillLevel() + rand(5, 10));
+        } elseif ($this->getHealthLevel() <= self::SKILL_MODERATE_HEALTH_THRESHOLD) {
+            $this->setSkillLevel($this->getSkillLevel() + rand(self::SKILL_BOOST_MODERATE_MIN, self::SKILL_BOOST_MODERATE_MAX));
             return $this->getName() . " performs " . $this->getAbility() .
                 " with skill level " . $this->getSkillLevel() . ".";
 
             //high performance boost if high health level
         } else {
-            $this->setSkillLevel($this->getSkillLevel() + rand(10, 20));
+            $this->setSkillLevel($this->getSkillLevel() + rand(self::SKILL_BOOST_HIGH_MIN, self::SKILL_BOOST_HIGH_MAX));
             return $this->getName() . " unleashes " . $this->getAbility() .
                 " with skill level " . $this->getSkillLevel() . ".";
         }
@@ -83,27 +122,27 @@ class Seraphim extends Angel
     {
         //adds encounters and loses a little energy from guarding
         $this->setHumanEncounters($this->getHumanEncounters() + 1);
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 0.5));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::EXPEDITION_HEALTH_COST));
         return $this->getName() . " descends from the heavens to watch over mortals.";
     }
 
     // FLYANDCHANGE INTERFACE METHODS
     public function fly()
     {
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 1));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::FLY_HEALTH_COST));
         $this->setFlyCount($this->getFlyCount() + 1);
 
         $log = $this->getName() . " soars with " . $this->getWingsCount() . " majestic wings!";
 
         // Flying too much - chance to fly too close to the sun (KILLS the Seraphim)
-        if ($this->getFlyCount() >= 3 && rand(1, 100) <= 30) {
+        if ($this->getFlyCount() >= self::FLY_SUN_DEATH_MIN_COUNT && rand(1, 100) <= self::FLY_SUN_DEATH_CHANCE_PER_100) {
             $this->setHealthLevel(0);
             $log .= " Oh No! " . $this->getName() . " flew too close to the sun and perished!";
             $this->setFlyCount(0);
         }
 
         // potential to die and fall due to low health
-        if ($this->getHealthLevel() <= 10 && rand(1, 100) <= 10) {
+        if ($this->getHealthLevel() <= self::FLY_LOW_HEALTH_THRESHOLD && rand(1, 100) <= self::FLY_FALL_DEATH_CHANCE_PER_100) {
             $this->setHealthLevel(0);
             $log .= " Ouch... " . $this->getName() . " flew but fell due to extreme health weakness!";
             $this->setFlyCount(0);
@@ -113,13 +152,13 @@ class Seraphim extends Angel
 
     public function spawn()
     {
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 0.75));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::SPAWN_HEALTH_COST));
         return $this->getName() . " summons a celestial light to guide the lost.";
     }
 
     public function teleport()
     {
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 1));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::TELEPORT_HEALTH_COST));
         return $this->getName() . " teleports between the heavenly realms.";
     }
 
@@ -133,7 +172,7 @@ class Seraphim extends Angel
 
         if ($prey !== null) {
             // 30% chance prey faints (health = 0)
-            if (rand(1, 100) <= 30) {
+            if (rand(1, 100) <= self::GLORY_FAINT_CHANCE_PER_100) {
                 $prey->setPreyHealth(0);
                 $_SESSION['prey_health'] = 0;
                 $log .= " " . $prey->getPreyName() . " is overwhelmed and faints! Health reduced to 0!";
@@ -147,7 +186,7 @@ class Seraphim extends Angel
         }
 
         // Revealing glory costs divinity
-        $this->setDivinityLevel(max(0, $this->getDivinityLevel() - rand(3, 8)));
+        $this->setDivinityLevel(max(0, $this->getDivinityLevel() - rand(self::GLORY_DIVINITY_COST_MIN, self::GLORY_DIVINITY_COST_MAX)));
 
         return $log;
     }
@@ -158,17 +197,17 @@ class Seraphim extends Angel
 
     public function heal()
     {
-        $healAmount = rand(10, 20);
+        $healAmount = rand(self::HEAL_AMOUNT_MIN, self::HEAL_AMOUNT_MAX);
         $newHealth = $this->getHealthLevel() + $healAmount;
-        $this->setHealthLevel(min(100, $newHealth));
-        $this->setDivinityLevel(max(0, $this->getDivinityLevel() - rand(2, 5)));
+        $this->setHealthLevel(min(self::HEAL_HEALTH_CAP, $newHealth));
+        $this->setDivinityLevel(max(0, $this->getDivinityLevel() - rand(self::HEAL_DIVINITY_COST_MIN, self::HEAL_DIVINITY_COST_MAX)));
         return $this->getName() . " heals for " . $healAmount . " health!";
     }
 
     public function bless()
     {
-        $this->setSkillLevel($this->getSkillLevel() + rand(5, 15));
-        $this->setDivinityLevel(max(0, $this->getDivinityLevel() - rand(1, 3)));
+        $this->setSkillLevel($this->getSkillLevel() + rand(self::BLESS_SKILL_BOOST_MIN, self::BLESS_SKILL_BOOST_MAX));
+        $this->setDivinityLevel(max(0, $this->getDivinityLevel() - rand(self::BLESS_DIVINITY_COST_MIN, self::BLESS_DIVINITY_COST_MAX)));
         return $this->getName() . " blesses the battlefield! Skill increased.";
     }
 }

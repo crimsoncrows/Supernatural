@@ -16,6 +16,41 @@ class Werewolf extends Supernatural implements Nocturnal
 {
     use Logger;
 
+    // PERFORM SKILL
+    private const SKILL_FEROCITY_GAIN_MIN = 5;
+    private const SKILL_FEROCITY_GAIN_MAX = 15;
+
+    // EXPEDITION / GO OUTSIDE / LURK
+    private const EXPEDITION_HEALTH_COST = 0.5;
+    private const GO_OUTSIDE_HEALTH_COST = 0.5;
+    private const LURK_HEALTH_COST = 0.5;
+
+    // MONITOR MOON STATUS
+    private const MOON_FEROCITY_GAIN_MIN = 2;
+    private const MOON_FEROCITY_GAIN_MAX = 8;
+
+    // CHASE
+    private const CHASE_HEALTH_COST_MIN = 3;
+    private const CHASE_HEALTH_COST_MAX = 8;
+    private const CHASE_CATCH_CHANCE_PER_100 = 20;
+    private const CHASE_ESCAPE_DAMAGE_MIN = 5;
+    private const CHASE_ESCAPE_DAMAGE_MAX = 15;
+
+    // POUNCE
+    private const POUNCE_HEALTH_COST_MIN = 5;
+    private const POUNCE_HEALTH_COST_MAX = 12;
+    private const POUNCE_CATCH_CHANCE_PER_100 = 15;
+    private const POUNCE_ESCAPE_DAMAGE_MIN = 8;
+    private const POUNCE_ESCAPE_DAMAGE_MAX = 20;
+
+    // ATTACK
+    private const ATTACK_POWER_MIN = 8;
+    private const ATTACK_POWER_MAX = 18;
+    private const ATTACK_FEROCITY_GAIN_MIN = 2;
+    private const ATTACK_FEROCITY_GAIN_MAX = 5;
+    private const ATTACK_HEALTH_COST_MIN = 1;
+    private const ATTACK_HEALTH_COST_MAX = 3;
+
     // =============================================
     // 3. PROPERTIES
     // =============================================
@@ -60,14 +95,14 @@ class Werewolf extends Supernatural implements Nocturnal
 
     public function performSkill()
     {
-        $this->setFerocity($this->getFerocity() + rand(5, 15));
+        $this->setFerocity($this->getFerocity() + rand(self::SKILL_FEROCITY_GAIN_MIN, self::SKILL_FEROCITY_GAIN_MAX));
         return $this->getName() . " transforms and ferocity heightens to " . $this->getFerocity() . "!";
     }
 
     public function goForExpedition()
     {
         $this->setHumanEncounters($this->getHumanEncounters() + 1);
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 0.5));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::EXPEDITION_HEALTH_COST));
         return $this->getName() . " prowls the night hunting prey.";
     }
 
@@ -77,19 +112,19 @@ class Werewolf extends Supernatural implements Nocturnal
 
     public function goOutside()
     {
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 0.5));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::GO_OUTSIDE_HEALTH_COST));
         return $this->getName() . " steps out into the moonlit forest.";
     }
 
     public function monitorMoonStatus()
     {
-        $this->setFerocity($this->getFerocity() + rand(2, 8));
+        $this->setFerocity($this->getFerocity() + rand(self::MOON_FEROCITY_GAIN_MIN, self::MOON_FEROCITY_GAIN_MAX));
         return $this->getName() . " senses the full moon's power. Ferocity increased to " . $this->getFerocity() . "!";
     }
 
     public function lurkInTheDark()
     {
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 0.5));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::LURK_HEALTH_COST));
         return $this->getName() . " lurks silently in the shadows.";
     }
 
@@ -99,12 +134,12 @@ class Werewolf extends Supernatural implements Nocturnal
 
     public function chase($prey = null)
     {
-        $healthCost = rand(3, 8);
+        $healthCost = rand(self::CHASE_HEALTH_COST_MIN, self::CHASE_HEALTH_COST_MAX);
         $this->setHealthLevel(max(0, $this->getHealthLevel() - $healthCost));
 
         $log = $this->getName() . " chases after " . ($prey ? $prey->getPreyName() : "the prey") . "! (Cost: " . $healthCost . " health)";
 
-        if (rand(1, 100) <= 20) {
+        if (rand(1, 100) <= self::CHASE_CATCH_CHANCE_PER_100) {
             if ($prey !== null) {
                 $prey->setPreyHealth(0);
                 $_SESSION['prey_health'] = 0;
@@ -112,7 +147,7 @@ class Werewolf extends Supernatural implements Nocturnal
                 $log .= " " . $this->getName() . " is victorious!";
             }
         } else {
-            $escapeDamage = rand(5, 15);
+            $escapeDamage = rand(self::CHASE_ESCAPE_DAMAGE_MIN, self::CHASE_ESCAPE_DAMAGE_MAX);
             $this->setHealthLevel(max(0, $this->getHealthLevel() - $escapeDamage));
             $log .= " The prey escaped! " . $this->getName() . " takes " . $escapeDamage . " damage from exhaustion!";
 
@@ -126,12 +161,12 @@ class Werewolf extends Supernatural implements Nocturnal
 
     public function pounce($prey = null)
     {
-        $healthCost = rand(5, 12);
+        $healthCost = rand(self::POUNCE_HEALTH_COST_MIN, self::POUNCE_HEALTH_COST_MAX);
         $this->setHealthLevel(max(0, $this->getHealthLevel() - $healthCost));
 
         $log = $this->getName() . " pounces on " . ($prey ? $prey->getPreyName() : "the prey") . "! (Cost: " . $healthCost . " health)";
 
-        if (rand(1, 100) <= 15) {
+        if (rand(1, 100) <= self::POUNCE_CATCH_CHANCE_PER_100) {
             if ($prey !== null) {
                 $prey->setPreyHealth(0);
                 $_SESSION['prey_health'] = 0;
@@ -139,7 +174,7 @@ class Werewolf extends Supernatural implements Nocturnal
                 $log .= " " . $this->getName() . " is victorious!";
             }
         } else {
-            $escapeDamage = rand(8, 20);
+            $escapeDamage = rand(self::POUNCE_ESCAPE_DAMAGE_MIN, self::POUNCE_ESCAPE_DAMAGE_MAX);
             $this->setHealthLevel(max(0, $this->getHealthLevel() - $escapeDamage));
             $log .= " The prey escaped! " . $this->getName() . " takes " . $escapeDamage . " damage from exhaustion!";
 
@@ -158,10 +193,10 @@ class Werewolf extends Supernatural implements Nocturnal
     public function attack($prey)
     {
         if ($prey !== null) {
-            $power = rand(8, 18);
+            $power = rand(self::ATTACK_POWER_MIN, self::ATTACK_POWER_MAX);
             $prey->setPreyHealth(max(0, $prey->getPreyHealth() - $power));
-            $this->setFerocity($this->getFerocity() + rand(2, 5));
-            $this->setHealthLevel(max(0, $this->getHealthLevel() - rand(1, 3)));
+            $this->setFerocity($this->getFerocity() + rand(self::ATTACK_FEROCITY_GAIN_MIN, self::ATTACK_FEROCITY_GAIN_MAX));
+            $this->setHealthLevel(max(0, $this->getHealthLevel() - rand(self::ATTACK_HEALTH_COST_MIN, self::ATTACK_HEALTH_COST_MAX)));
             $logMessage = $this->getName() . " attacks with claws, " . $power . " damage!";
             return $logMessage;
         }

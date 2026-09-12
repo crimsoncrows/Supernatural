@@ -16,6 +16,19 @@ require_once 'classes_and_int/Werewolf.php';
 require_once 'classes_and_int/Prey.php';
 
 // =============================================
+// BONUS ATTACK SETTINGS
+// =============================================
+
+const BONUS_ATTACK_CHANCE_PER_100 = 50;
+
+// Actions that don't already put the creature and prey in direct combat
+const NON_PREY_ACTIONS = [
+        'fly', 'spawn', 'teleport', 'morph',
+        'goOutside', 'monitorMoon', 'lurk',
+        'roam', 'perform', 'deal'
+];
+
+// =============================================
 // 2. SESSION INITIALIZATION
 // =============================================
 
@@ -192,153 +205,129 @@ $prey = new Prey(
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $logEntry = '';
+    $action = $_POST['action'];
 
     // ---- SUPERNAUTRAL ACTIONS ----
     if ($creature instanceof Supernatural) {
-        if ($_POST['action'] === 'perform') {
+        if ($action === 'perform') {
             $logEntry = $creature->performSkill();
-        } elseif ($_POST['action'] === 'roam') {
+        } elseif ($action === 'roam') {
             $logEntry = $creature->goForExpedition();
         }
     }
 
     // ---- FLYANDCHANGE ACTIONS ----
     if ($creature instanceof FlyandChange) {
-        if ($_POST['action'] === 'fly') {
+        if ($action === 'fly') {
             $logEntry = $creature->fly();
-        } elseif ($_POST['action'] === 'spawn') {
+        } elseif ($action === 'spawn') {
             $logEntry = $creature->spawn();
-        } elseif ($_POST['action'] === 'teleport') {
+        } elseif ($action === 'teleport') {
             $logEntry = $creature->teleport();
-        } elseif ($_POST['action'] === 'morph') {
+        } elseif ($action === 'morph') {
             $logEntry = $creature->morph();
-        } elseif ($_POST['action'] === 'attack') {
+        } elseif ($action === 'attack') {
             $logEntry = $creature->attack($prey);
-        }
-
-        if ($logEntry !== '') {
-            $creature->battleLog($logEntry);
-        }
-
-        // ---- PREY ATTACKS BACK ----
-        if (isset($prey) && $prey instanceof Prey && $prey->getPreyHealth() > 0) {
-            // Sync prey mood from session BEFORE attacking (in case Netherlord just changed it)
-            $prey->setPreyMood($_SESSION['prey_mood']);
-
-            $preyLogEntry = $prey->attack($creature);
-            $prey->battleLog($preyLogEntry);
-            // DO NOT overwrite prey health - the creature's attack already updated it!
         }
     }
 
     // ---- NOCTURNAL ACTIONS ----
     if ($creature instanceof Nocturnal) {
-        if ($_POST['action'] === 'goOutside') {
+        if ($action === 'goOutside') {
             $logEntry = $creature->goOutside();
-        } elseif ($_POST['action'] === 'monitorMoon') {
+        } elseif ($action === 'monitorMoon') {
             $logEntry = $creature->monitorMoonStatus();
-        } elseif ($_POST['action'] === 'lurk') {
+        } elseif ($action === 'lurk') {
             $logEntry = $creature->lurkInTheDark();
-        }
-
-        if ($logEntry !== '') {
-            $creature->battleLog($logEntry);
         }
     }
 
     // ---- FIEND-SPECIFIC ACTIONS ----
     if ($creature instanceof Fiend) {
-        $logEntry = '';
-
-        if ($_POST['action'] === 'eat') {
+        if ($action === 'eat') {
             $logEntry = $creature->drainSoul($prey);
-        } elseif ($_POST['action'] === 'deal') {
+        } elseif ($action === 'deal') {
             $logEntry = $creature->createPact();
-        }
-
-        if ($logEntry !== '') {
-            $creature->battleLog($logEntry);
         }
     }
 
     // ---- VAMPIRE-SPECIFIC ACTIONS ----
     if ($creature instanceof Vampire) {
-        $logEntry = '';
-
-        if ($_POST['action'] === 'bite') {
+        if ($action === 'bite') {
             $logEntry = $creature->attackAndBite($prey);
-        } elseif ($_POST['action'] === 'drain') {
+        } elseif ($action === 'drain') {
             $logEntry = $creature->attackAndBite($prey, 20.0);
-        }
-
-        if ($logEntry !== '') {
-            $creature->battleLog($logEntry);
         }
     }
 
     // ---- NETHERLORD-SPECIFIC ACTIONS ----
     if ($creature instanceof Netherlord) {
-        $logEntry = '';
-
-        if ($_POST['action'] === 'collectSoul') {
+        if ($action === 'collectSoul') {
             $logEntry = $creature->collectSoul($prey);
-        } elseif ($_POST['action'] === 'netherStorm') {
+        } elseif ($action === 'netherStorm') {
             $logEntry = $creature->netherStorm($prey);
-        }
-
-        if ($logEntry !== '') {
-            $creature->battleLog($logEntry);
         }
     }
 
     // ---- ANGEL-SPECIFIC ACTIONS ----
     if ($creature instanceof Angel) {
-        $logEntry = '';
-
-        if ($_POST['action'] === 'healPrey') {
+        if ($action === 'healPrey') {
             $healAmount = rand(10, 25);
             $logEntry = $creature->healPrey($prey, $healAmount);
-        } elseif ($_POST['action'] === 'blessPrey') {
+        } elseif ($action === 'blessPrey') {
             $blessing = 'Divine Protection';
             $logEntry = $creature->blessPrey($prey, $blessing);
-        }
-
-        if ($logEntry !== '') {
-            $creature->battleLog($logEntry);
         }
     }
 
     // ---- SERAPHIM-SPECIFIC ACTIONS ----
     if ($creature instanceof Seraphim) {
-        $logEntry = '';
-
-        if ($_POST['action'] === 'revealGlory') {
+        if ($action === 'revealGlory') {
             $logEntry = $creature->revealGlory($prey);
-        } elseif ($_POST['action'] === 'heal') {
+        } elseif ($action === 'heal') {
             $logEntry = $creature->heal();
-        } elseif ($_POST['action'] === 'bless') {
+        } elseif ($action === 'bless') {
             $logEntry = $creature->bless();
-        }
-
-        if ($logEntry !== '') {
-            $creature->battleLog($logEntry);
         }
     }
 
     // ---- WEREWOLF-SPECIFIC ACTIONS ----
     if ($creature instanceof Werewolf) {
-        $logEntry = '';
-
-        if ($_POST['action'] === 'chase') {
+        if ($action === 'chase') {
             $logEntry = $creature->chase($prey);
-        } elseif ($_POST['action'] === 'pounce') {
+        } elseif ($action === 'pounce') {
             $logEntry = $creature->pounce($prey);
-        } elseif ($_POST['action'] === 'attack') {
+        } elseif ($action === 'attack') {
             $logEntry = $creature->attack($prey);
         }
+    }
 
-        if ($logEntry !== '') {
-            $creature->battleLog($logEntry);
+    // 1. LOG PREDATOR MOVE FIRST
+    if ($logEntry !== '') {
+        $creature->battleLog($logEntry);
+    }
+
+    // 2. PREY ATTACKS BACK LOGIC
+    if (isset($prey) && $prey instanceof Prey && $prey->getPreyHealth() > 0) {
+        $shouldPreyAttack = false;
+
+        // If the predator did a non-attack action, 50% chance the prey takes a swing anyway
+        if (in_array($action, NON_PREY_ACTIONS, true)) {
+            if (rand(1, 100) <= BONUS_ATTACK_CHANCE_PER_100) {
+                $shouldPreyAttack = true;
+            }
+        }
+        // If it was a combat/attack action, prey always counterattacks
+        // (excluding angelic non-damage actions like healing)
+        elseif (!in_array($action, ['healPrey', 'blessPrey', 'revealGlory', 'heal', 'bless'], true)) {
+            $shouldPreyAttack = true;
+        }
+
+        // Execute and log prey attack second
+        if ($shouldPreyAttack) {
+            $prey->setPreyMood($_SESSION['prey_mood']);
+            $preyLogEntry = $prey->attack($creature);
+            $prey->battleLog($preyLogEntry);
         }
     }
 
@@ -446,6 +435,27 @@ if (!isset($_SESSION['battlelog'])) {
         ?>
         <img src="<?= htmlspecialchars($icon) ?>" alt="Player Portrait" class="player-pic">
         <h2><?= $creature->getName() ?>'s Status</h2>
+        <h2><?= " | " . $creature->getAbility() ?></h2>
+
+    </div>
+
+    <!-- BATTLE PROGRESS BARS -->
+    <div class="battle-progress">
+        <div class="health-wrapper predator-health">
+            <div class="health-label"><?= $creature->getName() ?> <span>(<?= $creature->getHealthLevel() ?> HP)</span></div>
+            <div class="health-bar-bg">
+                <div class="health-fill" style="width: <?= min(100, max(0, $creature->getHealthLevel())) ?>%;"></div>
+            </div>
+        </div>
+
+        <div class="vs-text">VS</div>
+
+        <div class="health-wrapper prey-health">
+            <div class="health-label"><?= $prey->getPreyName() ?> <span>(<?= $prey->getPreyHealth() ?> HP)</span></div>
+            <div class="health-bar-bg">
+                <div class="health-fill" style="width: <?= min(100, max(0, $prey->getPreyHealth())) ?>%;"></div>
+            </div>
+        </div>
     </div>
 
     <div class="creature-info">
@@ -772,6 +782,7 @@ if (!isset($_SESSION['battlelog'])) {
         $resultMessage = "Both fighters collapse... it's a draw.";
     } elseif ($healthLeftPredator <= 0) {
         $resultMessage = $prey->getPreyName() . " has survived! " . $creature->getName() . " has fallen.";
+
     } elseif ($healthLeftPrey <= 0) {
         $resultMessage = $creature->getName() . " emerges victorious over " . $prey->getPreyName() . "!";
     } else {
@@ -781,17 +792,37 @@ if (!isset($_SESSION['battlelog'])) {
 
     <?php if ($resultMessage !== null): ?>
         <div class="modal-overlay">
-            <div class="modal-box">
-                <p><?= htmlspecialchars($resultMessage) ?></p>
-                <form method="POST" action="reset.php">
-                    <button type="submit" class="method-btn">Play Again</button>
-                </form>
+            <div class="game-over-box">
+
+                <!-- LEFT SIDE -->
+                <div class="game-over-result">
+                    <h2>BATTLE OVER</h2>
+
+                    <p class="result-message">
+                        <?= htmlspecialchars($resultMessage) ?>
+                    </p>
+
+                    <form method="POST" action="reset.php">
+                        <button type="submit" class="method-btn">
+                            Play Again
+                        </button>
+                    </form>
+                </div>
+
+                <!-- RIGHT SIDE -->
+                <div class="game-over-history">
+                    <h3>Battle History</h3>
+
+                    <div class="history-entries">
+                        <?php foreach ($_SESSION['battlelog'] as $entry): ?>
+                            <p><?= '> > ' . htmlspecialchars($entry) ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
             </div>
         </div>
     <?php endif; ?>
-
-
-
 
     <!-- ============================================= -->
     <!-- 12. JAVASCRIPT - AUTO-SCROLL BATTLE LOG -->
@@ -805,9 +836,6 @@ if (!isset($_SESSION['battlelog'])) {
             }
         });
     </script>
-
-
-
 
 </body>
 </html>

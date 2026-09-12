@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])) {
     <div class="intro-text">
         <div class="welcome">
 
-            <img src="N109-LOGO.png" style  width="400" height="400">
+            <img src="logo.png" style  width="400" height="400">
             <hr>
         </div>
 
@@ -46,15 +46,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])) {
   </p>
 </div>
 
-<div class="how-to-play">
-  <ol>
-    <li><strong>Choose your side.</strong> Pick a predator (Vampire, Werewolf, Fiend) to hunt, or a prey/guardian type (Angel, Seraphim) to survive and resist.</li>
-    <li><strong>Face your foe.</strong> Each round, your creature and your opponent exchange skills — predators attack and drain, guardians defend and protect.</li>
-    <li><strong>Watch your stats.</strong> Health, skill level, and unique traits (bite force, mood, blood drank) shift with every action. Weaknesses — garlic, sunlight, holy water — can turn a fight fast.</li>
-    <li><strong>Survive or feast.</strong> The round ends when one side's health reaches zero. Predators win by draining their prey; prey win by outlasting the hunt.</li>
-  </ol>
-</div>
-
+    <div class="how-to-play">
+        <ol>
+            <li><strong>Choose your side.</strong> Pick a predator (Vampire, Werewolf, Fiend, Netherlord) to hunt, or a celestial guardian (Angel, Seraphim) to resist and redeem.</li>
+            <li><strong>Face your foe.</strong> Each round, your creature and the prey exchange blows. Predators attack, bite, drain, and pounce. Guardians smite, bless, heal, and reveal glory. Non-combat actions give the prey a 50% chance to swing back.</li>
+            <li><strong>Watch your stats.</strong> Health, skill level, and unique traits shift with every action. Weaknesses and random events — garlic, sunlight, holy water, sun-death, minion failures — can turn a fight fast.</li>
+            <li><strong>Mind the mood.</strong> Prey mood is randomized and can shift mid-battle based on your actions, changing how hard they hit back.</li>
+            <li><strong>Survive or feast.</strong> The battle ends when either side's health reaches zero. Predators win by draining their prey; prey win by outlasting the hunt.</li>
+        </ol>
+    </div>
 
 <div class="home">
 

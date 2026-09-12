@@ -9,6 +9,20 @@ class Prey
 {
     use Logger;
 
+    // ATTACK DAMAGE BY MOOD
+    private const LIGHT_DAMAGE_MIN = 5;
+    private const LIGHT_DAMAGE_MAX = 15;
+    private const AGGRESSIVE_DAMAGE_MIN = 20;
+    private const AGGRESSIVE_DAMAGE_MAX = 30;
+    private const MODERATE_DAMAGE_MIN = 10;
+    private const MODERATE_DAMAGE_MAX = 19;
+    private const VIOLENT_DAMAGE_MIN = 30;
+    private const VIOLENT_DAMAGE_MAX = 50;
+    private const SCARED_DAMAGE_MIN = 2;
+    private const SCARED_DAMAGE_MAX = 8;
+    private const NEUTRAL_DAMAGE_MIN = 3;
+    private const NEUTRAL_DAMAGE_MAX = 8;
+
     // =============================================
     // PROPERTIES
     // =============================================
@@ -83,35 +97,35 @@ class Prey
         // ---- LIGHT MOOD ----
         // Prey is calm but will defend itself
         if ($mood === 'light' || $mood === 'good' || $mood === 'unreadable') {
-            $damage = rand(5, 15);
+            $damage = rand(self::LIGHT_DAMAGE_MIN, self::LIGHT_DAMAGE_MAX);
             $target->setHealthLevel(max(0, $target->getHealthLevel() - $damage));
             return $this->preyName . " attacks the creature, dealing " . $damage . " damage!";
 
             // ---- AGGRESSIVE MOOD ----
             // Prey fights back with vicious fury
         } elseif ($mood === 'aggressive') {
-            $damage = rand(20, 30);
+            $damage = rand(self::AGGRESSIVE_DAMAGE_MIN, self::AGGRESSIVE_DAMAGE_MAX);
             $target->setHealthLevel(max(0, $target->getHealthLevel() - $damage));
             return $this->preyName . " lashes out viciously, dealing " . $damage . " damage!";
 
             // ---- MODERATE MOOD ----
             // Prey fights back with balanced force
         } elseif ($mood === 'moderate') {
-            $damage = rand(10, 19);
+            $damage = rand(self::MODERATE_DAMAGE_MIN, self::MODERATE_DAMAGE_MAX);
             $target->setHealthLevel(max(0, $target->getHealthLevel() - $damage));
             return $this->preyName . " strikes back firmly, dealing " . $damage . " damage!";
 
             // ---- VIOLENT MOOD ----
             // Prey becomes extremely dangerous (Netherlord only)
         } elseif ($mood === 'violent') {
-            $damage = rand(30, 50);
+            $damage = rand(self::VIOLENT_DAMAGE_MIN, self::VIOLENT_DAMAGE_MAX);
             $target->setHealthLevel(max(0, $target->getHealthLevel() - $damage));
             return $this->preyName . " attacks with deadly rage, dealing " . $damage . " damage!";
 
             // ---- SCARED, STARTLED, MORTIFIED ----
             // Prey is frightened but still fights weakly
         } elseif ($mood === 'scared' || $mood === 'startled' || $mood === 'mortified') {
-            $damage = rand(2, 8);
+            $damage = rand(self::SCARED_DAMAGE_MIN, self::SCARED_DAMAGE_MAX);
             $target->setHealthLevel(max(0, $target->getHealthLevel() - $damage));
             return $this->preyName . " is scared and barely manages to defend, dealing " . $damage . " damage!";
 
@@ -123,7 +137,7 @@ class Prey
                 return $this->preyName . " watches warily, unsure what to do.";
             } else {
                 // For other creatures, prey still attacks with basic damage
-                $damage = rand(3, 8);
+                $damage = rand(self::NEUTRAL_DAMAGE_MIN, self::NEUTRAL_DAMAGE_MAX);
                 $target->setHealthLevel(max(0, $target->getHealthLevel() - $damage));
                 return $this->preyName . " cautiously defends, dealing " . $damage . " damage!";
             }

@@ -10,6 +10,78 @@ class Netherlord extends Supernatural implements FlyandChange
 {
     use Logger;
 
+    // PERFORM SKILL THRESHOLDS & BOOSTS
+    private const SKILL_LOW_HEALTH_THRESHOLD = 20;
+    private const SKILL_MODERATE_HEALTH_THRESHOLD = 40;
+    private const SKILL_BOOST_LOW_MIN = 1;
+    private const SKILL_BOOST_LOW_MAX = 5;
+    private const SKILL_BOOST_MODERATE_MIN = 5;
+    private const SKILL_BOOST_MODERATE_MAX = 10;
+    private const SKILL_BOOST_HIGH_MIN = 10;
+    private const SKILL_BOOST_HIGH_MAX = 20;
+
+    // HEALTH COSTS
+    private const EXPEDITION_HEALTH_COST = 0.5;
+    private const FLY_HEALTH_COST = 1;
+    private const SPAWN_HEALTH_COST = 0.75;
+    private const TELEPORT_HEALTH_COST = 1;
+    private const MORPH_HEALTH_COST = 2;
+
+    // FLY
+    private const FLY_SCARE_CHANCE_PER_100 = 30;
+
+    // SPAWN
+    private const SPAWN_DEATH_CHANCE_PER_1000 = 5;
+    private const SPAWN_DEATH_CAUSES = [
+        "a failed binding ritual",
+        "insufficient dark energy",
+        "premature exposure to light",
+        "a fractured summoning circle",
+        "the master's own instability",
+        "a rival shadow's ambush",
+        "the weight of its own hunger",
+        "an unraveling of its form",
+    ];
+    private const SPAWN_FAILED_SUMMON_CHANCE_PER_100 = 2;
+    private const SPAWN_FAILED_SUMMON_MIN_PENALTY = 1;
+    private const SPAWN_FAILED_SUMMON_MAX_PENALTY = 5;
+
+    // TELEPORT
+    private const TELEPORT_MORTIFY_CHANCE_PER_100 = 30;
+    private const TELEPORT_FEAR_DAMAGE_MIN = 5;
+    private const TELEPORT_FEAR_DAMAGE_MAX = 10;
+
+    // MORPH
+    private const MORPH_VIOLENT_CHANCE_PER_100 = 20;
+
+    // COLLECT SOUL
+    private const COLLECT_SOUL_DAMAGE_MIN = 15;
+    private const COLLECT_SOUL_DAMAGE_MAX = 25;
+    private const COLLECT_SOUL_REALM_POWER_GAIN_MIN = 2;
+    private const COLLECT_SOUL_REALM_POWER_GAIN_MAX = 5;
+    private const COLLECT_SOUL_NO_PREY_REALM_POWER_GAIN_MIN = 1;
+    private const COLLECT_SOUL_NO_PREY_REALM_POWER_GAIN_MAX = 3;
+
+    // NETHER STORM
+    private const STORM_DAMAGE_MIN = 10;
+    private const STORM_DAMAGE_MAX = 20;
+    private const STORM_REALM_POWER_COST_MIN = 3;
+    private const STORM_REALM_POWER_COST_MAX = 8;
+    private const STORM_HEALTH_COST_MIN = 2;
+    private const STORM_HEALTH_COST_MAX = 5;
+    private const STORM_NO_PREY_REALM_POWER_COST_MIN = 2;
+    private const STORM_NO_PREY_REALM_POWER_COST_MAX = 5;
+
+    // ATTACK
+    private const ATTACK_POWER_MIN = 10;
+    private const ATTACK_POWER_MAX = 25;
+    private const ATTACK_MINION_BONUS_MULTIPLIER = 0.5;
+    private const ATTACK_HEALTH_REGEN_MIN = 3;
+    private const ATTACK_HEALTH_REGEN_MAX = 8;
+    private const ATTACK_HEALTH_CAP = 100;
+    private const ATTACK_REALM_POWER_GAIN_MIN = 1;
+    private const ATTACK_REALM_POWER_GAIN_MAX = 3;
+
     // PROPERTIES
     private int $soulsCollected;
     private float $realmPower;
@@ -70,16 +142,16 @@ class Netherlord extends Supernatural implements FlyandChange
 
     public function performSkill()
     {
-        if ($this->getHealthLevel() <= 20) {
-            $this->setSkillLevel($this->getSkillLevel() + rand(1, 5));
+        if ($this->getHealthLevel() <= self::SKILL_LOW_HEALTH_THRESHOLD) {
+            $this->setSkillLevel($this->getSkillLevel() + rand(self::SKILL_BOOST_LOW_MIN, self::SKILL_BOOST_LOW_MAX));
             return $this->getName() . " tries to perform " . $this->getAbility() .
                 " with skill level " . $this->getSkillLevel() . ".";
-        } elseif ($this->getHealthLevel() <= 40) {
-            $this->setSkillLevel($this->getSkillLevel() + rand(5, 10));
+        } elseif ($this->getHealthLevel() <= self::SKILL_MODERATE_HEALTH_THRESHOLD) {
+            $this->setSkillLevel($this->getSkillLevel() + rand(self::SKILL_BOOST_MODERATE_MIN, self::SKILL_BOOST_MODERATE_MAX));
             return $this->getName() . " performs " . $this->getAbility() .
                 " with skill level " . $this->getSkillLevel() . ".";
         } else {
-            $this->setSkillLevel($this->getSkillLevel() + rand(10, 20));
+            $this->setSkillLevel($this->getSkillLevel() + rand(self::SKILL_BOOST_HIGH_MIN, self::SKILL_BOOST_HIGH_MAX));
             return $this->getName() . " unleashes " . $this->getAbility() .
                 " with skill level " . $this->getSkillLevel() . ".";
         }
@@ -90,22 +162,23 @@ class Netherlord extends Supernatural implements FlyandChange
         // Increment human encounters
         $this->setHumanEncounters($this->getHumanEncounters() + 1);
 
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 0.5));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::EXPEDITION_HEALTH_COST));
         return $this->getName() . " roams through the nether realms, seeking new souls to command.";
     }
 
     // FLYANDCHANGE INTERFACE METHODS
     public function fly()
     {
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 1));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::FLY_HEALTH_COST));
 
         $log = $this->getName() . " soars through the dark dimensions on shadow wings.";
 
         // 30% chance to affect prey mood
-        if (rand(1, 100) <= 30) {
+        if (rand(1, 100) <= self::FLY_SCARE_CHANCE_PER_100) {
             $log .= " The prey is scared by the dark presence!";
             $_SESSION['prey_mood'] = 'scared';
         }
+
 
         return $log;
     }
@@ -114,14 +187,24 @@ class Netherlord extends Supernatural implements FlyandChange
     {
         // Spawn a minion
         $this->setMinionCount($this->getMinionCount() + 1);
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 0.75));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::SPAWN_HEALTH_COST));
 
         $log = $this->getName() . " spawns a new minion from the shadows. (+1 minion)";
 
-        // 30% chance to affect prey mood
-        if (rand(1, 100) <= 30) {
-            $log .= " The prey is startled by the sudden apparition!";
-            $_SESSION['prey_mood'] = 'startled';
+        if (rand(1, 1000) <= self::SPAWN_DEATH_CHANCE_PER_1000) {
+            $this->setMinionCount($this->getMinionCount() - 1);
+
+            $causeOfDeath = self::SPAWN_DEATH_CAUSES[array_rand(self::SPAWN_DEATH_CAUSES)];
+
+            $log .= " Someone has fallen! The minion unfortunately perishes due to " . $causeOfDeath . ".";
+        }
+
+        // 2% chance of a failed summon, separate from minion death
+        if (rand(1, 100) <= self::SPAWN_FAILED_SUMMON_CHANCE_PER_100) {
+            $failedSummonPenalty = rand(self::SPAWN_FAILED_SUMMON_MIN_PENALTY, self::SPAWN_FAILED_SUMMON_MAX_PENALTY); // random -1 to -5
+            $this->setHealthLevel(max(0, $this->getHealthLevel() - $failedSummonPenalty));
+
+            $log .= " The summoning falters, draining " . $this->getName() . " of " . $failedSummonPenalty . " health.";
         }
 
         return $log;
@@ -129,17 +212,17 @@ class Netherlord extends Supernatural implements FlyandChange
 
     public function teleport()
     {
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 1));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::TELEPORT_HEALTH_COST));
 
         $log = $this->getName() . " instantly teleports through the void.";
 
         // 30% chance to affect prey mood
-        if (rand(1, 100) <= 30) {
+        if (rand(1, 100) <= self::TELEPORT_MORTIFY_CHANCE_PER_100) {
             $log .= " The prey is mortified by the netherlord's power!";
             $_SESSION['prey_mood'] = 'mortified';
 
             // If mortified, prey loses health
-            $damage = rand(5, 10);
+            $damage = rand(self::TELEPORT_FEAR_DAMAGE_MIN, self::TELEPORT_FEAR_DAMAGE_MAX);
             $log .= " The prey takes " . $damage . " damage from fear!";
             $_SESSION['prey_health'] = max(0, $_SESSION['prey_health'] - $damage);
         }
@@ -149,12 +232,12 @@ class Netherlord extends Supernatural implements FlyandChange
 
     public function morph()
     {
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 2));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::MORPH_HEALTH_COST));
 
         $log = $this->getName() . " morphs into a terrifying form!";
 
-        // 30% chance to make prey violent
-        if (rand(1, 100) <= 30) {
+        // 20% chance to make prey violent
+        if (rand(1, 100) <= self::MORPH_VIOLENT_CHANCE_PER_100) {
             $log .= " The prey becomes VIOLENT and turns on the netherlord!";
             $_SESSION['prey_mood'] = 'violent';
 
@@ -176,13 +259,13 @@ class Netherlord extends Supernatural implements FlyandChange
             $this->setSoulsCollected($this->getSoulsCollected() + 1);
 
             // Damage prey
-            $damage = rand(15, 25);
+            $damage = rand(self::COLLECT_SOUL_DAMAGE_MIN, self::COLLECT_SOUL_DAMAGE_MAX);
             $prey->setPreyHealth(max(0, $prey->getPreyHealth() - $damage));
 
             // Increase realm power from collecting souls
-            $this->setRealmPower($this->getRealmPower() + rand(2, 5));
+            $this->setRealmPower($this->getRealmPower() + rand(self::COLLECT_SOUL_REALM_POWER_GAIN_MIN, self::COLLECT_SOUL_REALM_POWER_GAIN_MAX));
 
-            $log = $this->getName() . " rips the soul from " . $prey->getPreyName() . "! (+1 soul)";
+            $log = $this->getName() . " rips a part of a soul from " . $prey->getPreyName() . "! (+1 soul)";
             $log .= " " . $prey->getPreyName() . " takes " . $damage . " damage!";
             $log .= " Realm power increased to " . $this->getRealmPower() . ".";
 
@@ -192,7 +275,7 @@ class Netherlord extends Supernatural implements FlyandChange
         } else {
             // No prey, collect wandering soul
             $this->setSoulsCollected($this->getSoulsCollected() + 1);
-            $this->setRealmPower($this->getRealmPower() + rand(1, 3));
+            $this->setRealmPower($this->getRealmPower() + rand(self::COLLECT_SOUL_NO_PREY_REALM_POWER_GAIN_MIN, self::COLLECT_SOUL_NO_PREY_REALM_POWER_GAIN_MAX));
 
             return $this->getName() . " collects a wandering soul from the void. (+1 soul)";
         }
@@ -202,14 +285,14 @@ class Netherlord extends Supernatural implements FlyandChange
     {
         if ($prey !== null && $prey->getPreyHealth() > 0) {
             // Unleash dark magic storm
-            $damage = rand(10, 20);
+            $damage = rand(self::STORM_DAMAGE_MIN, self::STORM_DAMAGE_MAX);
             $prey->setPreyHealth(max(0, $prey->getPreyHealth() - $damage));
 
             // Costs realm power
-            $this->setRealmPower($this->getRealmPower() - rand(3, 8));
+            $this->setRealmPower($this->getRealmPower() - rand(self::STORM_REALM_POWER_COST_MIN, self::STORM_REALM_POWER_COST_MAX));
 
             // Small health cost
-            $this->setHealthLevel(max(0, $this->getHealthLevel() - rand(2, 5)));
+            $this->setHealthLevel(max(0, $this->getHealthLevel() - rand(self::STORM_HEALTH_COST_MIN, self::STORM_HEALTH_COST_MAX)));
 
             $log = $this->getName() . " unleashes a nether storm upon " . $prey->getPreyName() . "!";
             $log .= " " . $prey->getPreyName() . " takes " . $damage . " damage!";
@@ -220,7 +303,7 @@ class Netherlord extends Supernatural implements FlyandChange
             return $this->getName() . " unleashes a nether storm, but " . $prey->getPreyName() . " is already destroyed.";
         } else {
             // No prey, storm the void
-            $this->setRealmPower($this->getRealmPower() - rand(2, 5));
+            $this->setRealmPower($this->getRealmPower() - rand(self::STORM_NO_PREY_REALM_POWER_COST_MIN, self::STORM_NO_PREY_REALM_POWER_COST_MAX));
             return $this->getName() . " unleashes a nether storm into the void. Realm power decreased.";
         }
     }
@@ -231,14 +314,14 @@ class Netherlord extends Supernatural implements FlyandChange
     {
         if ($prey !== null) {
             // Netherlord attack with minion support
-            $power = rand(10, 25);
+            $power = rand(self::ATTACK_POWER_MIN, self::ATTACK_POWER_MAX);
 
             // Bonus damage from minions
-            $minionBonus = $this->getMinionCount() * 0.5;
+            $minionBonus = $this->getMinionCount() * self::ATTACK_MINION_BONUS_MULTIPLIER;
             $totalPower = $power + $minionBonus;
 
-            $this->setHealthLevel(min(100, $this->getHealthLevel() + rand(3, 8)));
-            $this->setRealmPower($this->getRealmPower() + rand(1, 3));
+            $this->setHealthLevel(min(self::ATTACK_HEALTH_CAP, $this->getHealthLevel() + rand(self::ATTACK_HEALTH_REGEN_MIN, self::ATTACK_HEALTH_REGEN_MAX)));
+            $this->setRealmPower($this->getRealmPower() + rand(self::ATTACK_REALM_POWER_GAIN_MIN, self::ATTACK_REALM_POWER_GAIN_MAX));
 
             $prey->setPreyHealth(max(0, $prey->getPreyHealth() - $totalPower));
 
@@ -274,10 +357,7 @@ $ancientNetherlord = new Netherlord(
     250, 85.0, 45
 );
 
-// =============================================
-// 11. NETHERLORD COLLECTION
-// =============================================
-
+// NETHERLORD COLLECTION
 $netherlordCollection = [
     $youngNetherlord,
     $defaultNetherlord,

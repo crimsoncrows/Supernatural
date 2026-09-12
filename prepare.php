@@ -302,9 +302,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
 <div class="intro-text">
     <h2>The Battlefield</h2>
     <p>
-        Beneath the bleeding glow of a crimson moon lies a desolate expanse of
-        crumbling gothic ruins and encroaching shadows—the ultimate arena for the creatures of the night.
-        Choose a preset creature or create your own. Mechanics can be read below before the battle.
+        Beneath a red moon, dark gothic ruins await. This is the arena for creatures of the night. Choose a preset creature or build your own. Read the mechanics below before the battle begins.
     </p>
 </div>
 
@@ -546,8 +544,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
 <!-- CLASS MECHANICS - EDUCATIONAL -->
 <!-- ============================================= -->
 
+<!-- ============================================= -->
+<!-- CLASS MECHANICS - EDUCATIONAL -->
+<!-- ============================================= -->
+
 <div class="class-mechanics">
-    <h2>How This Battle Works</h2>
+    <h2>How This Battle Works (Dev and Player Guide)</h2>
 
     <?php if ($player === 'Fiend') { ?>
         <div class="class-explanation">
@@ -560,15 +562,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                 <li><strong>Interface:</strong> Implements FlyandChange.</li>
                 <li><strong>Trait:</strong> Uses Logger for battle logging.</li>
                 <li><strong>Encapsulation:</strong> Private properties with public getters/setters.</li>
+                <li><strong>Polymorphism:</strong> Overrides abstract methods like performSkill() and goForExpedition().</li>
             </ul>
             <p><strong>Abilities:</strong></p>
             <ul>
                 <li><strong>performSkill():</strong> Scales skill gains based on health tier.</li>
                 <li><strong>attack($prey):</strong> Deals 5-20 damage, increases corruption by 3-5.</li>
-                <li><strong>eatSoul($prey):</strong> Conditional (health ≤ 20, skill ≥ 80). Restores 20-30 health.</li>
-                <li><strong>createPact():</strong> Conditional (health ≤ 90, prey mood = "good").</li>
+                <li><strong>drainSoul($prey):</strong> Restores 20-30 health, increases corruption by 3-10, deals 100 damage to prey.</li>
+                <li><strong>createPact():</strong> +1 pact, boosts skill by 10-25, sets fear aura to "Medium".</li>
                 <li><strong>fly/spawn/teleport/morph:</strong> Decrease health for dark maneuvers.</li>
             </ul>
+            <p><strong>Random Events:</strong> Prey mood can shift based on actions, affecting counter-attack damage. Dark maneuvers may trigger unpredictable reactions from the prey.</p>
         </div>
     <?php } elseif ($player === 'Vampire') { ?>
         <div class="class-explanation">
@@ -581,13 +585,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                 <li><strong>Interface:</strong> Implements Nocturnal.</li>
                 <li><strong>Trait:</strong> Uses Logger for battle logging.</li>
                 <li><strong>Encapsulation:</strong> Private properties with public accessors.</li>
+                <li><strong>Polymorphism:</strong> Overrides abstract methods like performSkill() and goForExpedition().</li>
             </ul>
             <p><strong>Abilities:</strong></p>
             <ul>
-                <li><strong>attackAndBite($prey, $bloodToDrain):</strong> Bite or drain blood. Restores 5-8 health on drain.</li>
-                <li><strong>Weakness Triggers:</strong> 30% chance to trigger garlic, sunlight, or holy water.</li>
+                <li><strong>attackAndBite($prey, $bloodToDrain):</strong> Bite or drain blood. Restores 5-8 health on drain. Costs 25 bite force.</li>
+                <li><strong>Weakness Triggers:</strong> 30% chance to trigger garlic, sunlight, or holy water after attacking.</li>
                 <li><strong>Nocturnal Interface:</strong> goOutside(), monitorMoonStatus(), lurkInTheDark().</li>
+                <li><strong>garlicThrown():</strong> 20% dodge chance. Otherwise -50 health, -20 skill, mood → "Annoyed".</li>
+                <li><strong>sunlightExposure():</strong> -70 health, -30 skill, mood → "Furious".</li>
+                <li><strong>holyWaterSprayed():</strong> -40 health, -25 skill, mood → "Terrified".</li>
             </ul>
+            <p><strong>Random Events:</strong> 30% chance after each attack to trigger a random weakness event (garlic, sunlight, or holy water), each with unique mood and stat penalties. Mood changes affect future interactions.</p>
         </div>
     <?php } elseif ($player === 'Netherlord') { ?>
         <div class="class-explanation">
@@ -600,14 +609,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                 <li><strong>Interface:</strong> Implements FlyandChange.</li>
                 <li><strong>Trait:</strong> Uses Logger for battle logging.</li>
                 <li><strong>Encapsulation:</strong> Private properties with controlled getter/setter access.</li>
+                <li><strong>Polymorphism:</strong> Overrides abstract methods like performSkill() and goForExpedition().</li>
             </ul>
             <p><strong>Abilities:</strong></p>
             <ul>
-                <li><strong>collectSoul($prey):</strong> +1 soul, deals 15-25 damage, boosts realm power.</li>
-                <li><strong>netherStorm($prey):</strong> Costs realm power, deals 10-20 damage.</li>
-                <li><strong>attack($prey):</strong> Minions attack with bonus damage per minion.</li>
-                <li><strong>fly/spawn/teleport/morph:</strong> 30% chance to alter prey mood.</li>
+                <li><strong>collectSoul($prey):</strong> +1 soul, deals 15-25 damage, boosts realm power by 2-5.</li>
+                <li><strong>netherStorm($prey):</strong> Costs 3-8 realm power, deals 10-20 damage, costs 2-5 health.</li>
+                <li><strong>attack($prey):</strong> Deals 10-25 base damage + 0.5 per minion, regenerates 3-8 health, +1-3 realm power.</li>
+                <li><strong>fly():</strong> 30% chance to scare prey (mood → "scared").</li>
+                <li><strong>spawn():</strong> +1 minion, 0.5% chance minion dies, 2% chance failed summon (-1 to -5 health).</li>
+                <li><strong>teleport():</strong> 30% chance to mortify prey (mood → "mortified", 5-10 fear damage).</li>
+                <li><strong>morph():</strong> 20% chance prey becomes violent, killing the Netherlord instantly.</li>
             </ul>
+            <p><strong>Random Events:</strong> Prey mood can shift to "scared", "mortified", or "violent" based on Netherlord actions. Violent prey deals massive damage (30-50) and can instantly kill the Netherlord during morph. Minion spawns carry death and failed summon risks.</p>
         </div>
     <?php } elseif ($player === 'Angel') { ?>
         <div class="class-explanation">
@@ -620,34 +634,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                 <li><strong>Interface:</strong> Implements FlyandChange.</li>
                 <li><strong>Trait:</strong> Uses Logger for battle logging.</li>
                 <li><strong>Encapsulation:</strong> Private properties (divinityLevel, aura) with public getters/setters.</li>
+                <li><strong>Polymorphism:</strong> Overrides abstract methods like performSkill() and goForExpedition().</li>
             </ul>
             <p><strong>Abilities:</strong></p>
             <ul>
-                <li><strong>healPrey($prey, $healAmount):</strong> 20% chance to redeem prey (health = 0).</li>
+                <li><strong>healPrey($prey, $healAmount):</strong> 20% chance to redeem prey (health = 0), +5 skill.</li>
                 <li><strong>blessPrey($prey, $blessing):</strong> Deals 3-8 damage, +10 divinity.</li>
-                <li><strong>attack($prey):</strong> Deals 5-15 damage, slightly raises divinity.</li>
-                <li><strong>fly/spawn/teleport/morph:</strong> Soar, cast guardians, teleport.</li>
+                <li><strong>attack($prey):</strong> Deals 5-15 damage, +1-3 divinity.</li>
+                <li><strong>fly():</strong> Soars gracefully through the skies.</li>
+                <li><strong>spawn():</strong> 0.5% chance a malicious demon slips through (-40 health).</li>
+                <li><strong>teleport():</strong> Instantly teleports to aid a nearby soul.</li>
+                <li><strong>morph():</strong> Transforms into a radiant form (random from 16 types).</li>
             </ul>
+            <p><strong>Random Events:</strong> Prey mood can become "redeemed" on a successful heal. Spawning carries a 0.5% chance of a demonic ambush, drastically reducing health. Morphing randomly selects one of 16 radiant forms.</p>
         </div>
     <?php } elseif ($player === 'Seraphim') { ?>
         <div class="class-explanation">
             <h3>Seraphim</h3>
             <p><strong>Role:</strong> Highest celestial being with many wings.</p>
-            <p><strong>Traits:</strong> Divinity Level, Wings Count.</p>
+            <p><strong>Traits:</strong> Divinity Level, Wings Count, Fly Count.</p>
             <p><strong>OOP Concepts:</strong></p>
             <ul>
                 <li><strong>Multi-level Inheritance:</strong> Extends Angel → Supernatural.</li>
-                <li><strong>Polymorphism:</strong> Overrides parent methods (heal(), bless()).</li>
+                <li><strong>Polymorphism:</strong> Overrides parent methods (heal(), bless(), performSkill(), goForExpedition()).</li>
                 <li><strong>Trait:</strong> Uses Logger for battle logging.</li>
                 <li><strong>Encapsulation:</strong> Private properties (wingsCount, flyCount) with getters/setters.</li>
             </ul>
             <p><strong>Abilities:</strong></p>
             <ul>
-                <li><strong>revealGlory($prey):</strong> 30% chance to instantly reduce prey health to 0.</li>
-                <li><strong>heal():</strong> Restores 10-20 health, costs divinity.</li>
-                <li><strong>bless():</strong> Enhances skill, drains divinity.</li>
-                <li><strong>fly():</strong> 3+ flights = 30% risk of flying too close to the sun (instant death).</li>
+                <li><strong>revealGlory($prey):</strong> 30% chance to instantly reduce prey health to 0, costs 3-8 divinity.</li>
+                <li><strong>heal():</strong> Restores 10-20 health, costs 2-5 divinity.</li>
+                <li><strong>bless():</strong> +5-15 skill, costs 1-3 divinity.</li>
+                <li><strong>fly():</strong> 3+ flights = 30% risk of flying too close to the sun (instant death). Low health (≤10) = 10% fall death risk.</li>
+                <li><strong>spawn():</strong> Summons a celestial light to guide the lost.</li>
+                <li><strong>teleport():</strong> Teleports between the heavenly realms.</li>
             </ul>
+            <p><strong>Random Events:</strong> Prey may faint (health = 0) when glory is revealed. Flying carries escalating risks—after 3 flights, a 30% chance of sun death; at low health, a 10% chance of falling to death.</p>
         </div>
     <?php } elseif ($player === 'Werewolf') { ?>
         <div class="class-explanation">
@@ -660,14 +682,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                 <li><strong>Interface:</strong> Implements Nocturnal.</li>
                 <li><strong>Trait:</strong> Uses Logger for battle logging.</li>
                 <li><strong>Encapsulation:</strong> Private ferocity property with public getter/setter.</li>
+                <li><strong>Polymorphism:</strong> Overrides abstract methods like performSkill() and goForExpedition().</li>
             </ul>
             <p><strong>Abilities:</strong></p>
             <ul>
-                <li><strong>chase($prey):</strong> Costs 3-8 health, 15-20% chance to capture prey.</li>
-                <li><strong>pounce($prey):</strong> Costs 5-12 health, high-intensity ambush.</li>
-                <li><strong>attack($prey):</strong> Deals 8-18 damage, increases ferocity.</li>
+                <li><strong>chase($prey):</strong> Costs 3-8 health, 20% chance to capture prey. Escape = 5-15 exhaustion damage.</li>
+                <li><strong>pounce($prey):</strong> Costs 5-12 health, 15% chance to capture prey. Escape = 8-20 exhaustion damage.</li>
+                <li><strong>attack($prey):</strong> Deals 8-18 damage, +2-5 ferocity, costs 1-3 health.</li>
                 <li><strong>monitorMoonStatus():</strong> Increases ferocity by 2-8 points.</li>
+                <li><strong>goOutside():</strong> Steps into the moonlit forest, costs 0.5 health.</li>
+                <li><strong>lurkInTheDark():</strong> Lurks silently in the shadows, costs 0.5 health.</li>
             </ul>
+            <p><strong>Random Events:</strong> Chase and pounce carry catch chances (20% and 15%). Failed attempts cause exhaustion damage (5-15 or 8-20). If health drops to 0 from exhaustion, the Werewolf perishes. Moon monitoring randomly boosts ferocity.</p>
         </div>
     <?php } ?>
 
@@ -695,6 +721,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
                 <li><strong>Neutral (vs others):</strong> Cautiously defends (3-8 damage)</li>
             </ul>
         </ul>
+        <p><strong>Random Events:</strong> Prey mood can shift during battle based on player actions (e.g., Netherlord's fly can scare, teleport can mortify, morph can enrage). Mood directly determines counter-attack damage, making prey unpredictable.</p>
     </div>
 </div>
 
@@ -767,12 +794,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
         </li>
 
         <li>
+            <strong>Bonus Prey Attack Chance:</strong>
+            For non-combat actions (fly, spawn, teleport, morph, goOutside,
+            monitorMoon, lurk, roam, perform, deal), there is a 50% chance
+            the prey takes a swing anyway, adding unpredictability to
+            non-offensive turns.
+        </li>
+
+        <li>
             <strong>Logging and Persistence:</strong>
             Every action message is pushed into the battle log using the
             Logger trait (<code>$creature-&gt;battleLog($msg)</code>), which
             serializes the logs into <code>$_SESSION['battlelog']</code>.
             All mutated object properties (health, skills, corruption,
-            ferocity, divinity) are written back into <code>$_SESSION</code> variables.
+            ferocity, divinity, mood, bite force, etc.) are written back into
+            <code>$_SESSION</code> variables.
         </li>
 
         <li>
@@ -846,8 +882,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
         <code>battlefield.php</code>.
     </p>
 
-</div>
+    <h3>Session Variables Registered</h3>
 
+    <p>
+        Depending on the creature type, the following session variables are stored:
+    </p>
+
+    <ul>
+        <li><strong>Common:</strong> <code>creature_type</code>, <code>name</code>, <code>age</code>, <code>humanEncounters</code>, <code>ability</code>, <code>skillLevel</code>, <code>healthLevel</code>.</li>
+        <li><strong>Fiend:</strong> <code>corruptionLevel</code>, <code>pactCount</code>, <code>fearAura</code>.</li>
+        <li><strong>Vampire:</strong> <code>bloodDrank</code>, <code>biteForce</code>, <code>mood</code>.</li>
+        <li><strong>Netherlord:</strong> <code>soulsCollected</code>, <code>realmPower</code>, <code>minionCount</code>.</li>
+        <li><strong>Angel:</strong> <code>divinityLevel</code>, <code>aura</code>.</li>
+        <li><strong>Seraphim:</strong> <code>divinityLevel</code>, <code>wingsCount</code>.</li>
+        <li><strong>Werewolf:</strong> <code>ferocity</code>.</li>
+        <li><strong>Prey:</strong> <code>prey_name</code>, <code>prey_age</code>, <code>prey_health</code>, <code>prey_mood</code>.</li>
+        <li><strong>Battle Log:</strong> <code>battlelog</code> (array of all action messages).</li>
+    </ul>
+
+    <h2>Prey Generation Details</h2>
+
+    <p>
+        Prey is dynamically generated when no prey session exists. The following
+        randomization rules apply:
+    </p>
+
+    <ul>
+        <li><strong>Name:</strong> Randomly selected from a pool of over 200 names spanning original, gothic/Victorian, medieval/noble, mythological/mystical, and dark fantasy villager categories.</li>
+        <li><strong>Age:</strong> 18-80 for most creatures; 100-200 for Angel and Seraphim (hunting demons instead of humans).</li>
+        <li><strong>Health Scaling by Age:</strong>
+            <ul>
+                <li>Age &gt; 60 and ≤ 80: 60-80 HP</li>
+                <li>Age &gt; 80 and ≤ 100: 40-60 HP</li>
+                <li>Age &gt; 100: 75-100 HP</li>
+                <li>Age &gt; 40 and ≤ 60: 80-95 HP</li>
+                <li>Age ≤ 40: 90-100 HP</li>
+            </ul>
+        </li>
+        <li><strong>Mood:</strong> Randomly selected from: aggressive, moderate, light, good, unreadable.</li>
+    </ul>
+
+    <h2>Victory Conditions</h2>
+
+    <ul>
+        <li><strong>Predator Wins:</strong> Prey health reaches 0 or below. Message: "[Creature] emerges victorious over [Prey]!"</li>
+        <li><strong>Prey Wins:</strong> Creature health reaches 0 or below. Message: "[Prey] has survived! [Creature] has fallen."</li>
+        <li><strong>Draw:</strong> Both health values reach 0 simultaneously. Message: "Both fighters collapse... it's a draw."</li>
+        <li><strong>Modal Overlay:</strong> Triggers on any victory condition, displaying the result and battle history with a "Play Again" button linking to <code>reset.php</code>.</li>
+    </ul>
+
+</div>
 
 
 </body>

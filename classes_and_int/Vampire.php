@@ -1,14 +1,36 @@
 <?php
 // 1. REQUIRE DEPENDENCIES (parent, interface and trait)
-    require_once 'Supernatural.php';
-    require_once 'Nocturnal.php';
-    require_once 'Logger.php';
+require_once 'Supernatural.php';
+require_once 'Nocturnal.php';
+require_once 'Logger.php';
 
 
 // 2. CLASS DECLARATION
 class Vampire extends Supernatural implements Nocturnal
 {
     use Logger;
+
+    // ATTACK AND BITE
+    private const LOW_BITE_DAMAGE_MIN = 1;
+    private const LOW_BITE_DAMAGE_MAX = 3;
+    private const NORMAL_BITE_DAMAGE_MIN = 5;
+    private const NORMAL_BITE_DAMAGE_MAX = 10;
+    private const BITE_FORCE_COST = 25;
+    private const DRAIN_HEALTH_GAIN_MIN = 5;
+    private const DRAIN_HEALTH_GAIN_MAX = 8;
+    private const DRAIN_HEALTH_CAP = 100;
+    private const WEAKNESS_TRIGGER_CHANCE_PER_100 = 30;
+
+    // WEAKNESSES
+    private const GARLIC_HEALTH_PENALTY = 50;
+
+    private const GARLIC_DODGE_CHANCE = 20;
+    private const GARLIC_SKILL_PENALTY = 20;
+    private const SUNLIGHT_HEALTH_PENALTY = 70;
+    private const SUNLIGHT_SKILL_PENALTY = 30;
+
+    private const HOLY_WATER_HEALTH_PENALTY = 40;
+    private const HOLY_WATER_SKILL_PENALTY = 25;
 
     //properties exclusive for vampire only
     private float $bloodDrank;
@@ -142,11 +164,11 @@ class Vampire extends Supernatural implements Nocturnal
 
         if ($biteForce <= 0) {
             // If bite force is 0 or less, only do 1-3 damage
-            $damage = rand(1, 3);
+            $damage = rand(self::LOW_BITE_DAMAGE_MIN, self::LOW_BITE_DAMAGE_MAX);
             $log = $this->getName() . " has no bite force left! Only manages " . $damage . " damage!\n";
         } else {
             // Normal damage based on bite force (5-10)
-            $damage = rand(5, 10);
+            $damage = rand(self::NORMAL_BITE_DAMAGE_MIN, self::NORMAL_BITE_DAMAGE_MAX);
         }
 
         $newPreyHealth = $prey->getPreyHealth() - $damage;
@@ -162,7 +184,7 @@ class Vampire extends Supernatural implements Nocturnal
                 $log .= "\n" . $prey->getPreyName() . " takes " . $damage . " damage!";
             }
 
-            $this->setBiteForce($this->getBiteForce() - 25);
+            $this->setBiteForce($this->getBiteForce() - self::BITE_FORCE_COST);
             $log .= "\nBite force now: " . $this->getBiteForce();
         } else {
             // DRAIN BLOOD: attack with blood drain
@@ -176,9 +198,9 @@ class Vampire extends Supernatural implements Nocturnal
                 $log .= " " . $prey->getPreyName() . " takes " . $damage . " damage!";
 
                 // Vampire gains 5-8 health from draining blood
-                $healthGain = rand(5, 8);
+                $healthGain = rand(self::DRAIN_HEALTH_GAIN_MIN, self::DRAIN_HEALTH_GAIN_MAX);
                 $newHealth = $this->getHealthLevel() + $healthGain;
-                $this->setHealthLevel(min(100, $newHealth)); // Cap at 100
+                $this->setHealthLevel(min(self::DRAIN_HEALTH_CAP, $newHealth)); // Cap at 100
                 $log .= " " . $this->getName() . " gains health from the blood!";
             }
         }
@@ -188,7 +210,7 @@ class Vampire extends Supernatural implements Nocturnal
         // =============================================
 
         // Randomly trigger a weakness (30% chance)
-        if (rand(1, 100) <= 30) {
+        if (rand(1, 100) <= self::WEAKNESS_TRIGGER_CHANCE_PER_100) {
             $weakness = rand(1, 3);
 
             switch ($weakness) {
@@ -213,10 +235,16 @@ class Vampire extends Supernatural implements Nocturnal
 
     public function garlicThrown()
     {
-        $newHealth = $this->getHealthLevel() - 50;
+        // Chance to dodge the garlic entirely
+        if (rand(1, 100) <= self::GARLIC_DODGE_CHANCE) {
+            $this->setMood("Amused");
+            return $this->getName() . " swiftly dodges the thrown garlic! The vampire laughs at the prey's attempted retaliation.";
+        }
+        // Everything below only runs if the dodge check fails
+        $newHealth = $this->getHealthLevel() - self::GARLIC_HEALTH_PENALTY;
         $this->setHealthLevel(max(0, $newHealth));
 
-        $newSkill = $this->getSkillLevel() - 20;
+        $newSkill = $this->getSkillLevel() - self::GARLIC_SKILL_PENALTY;
         $this->setSkillLevel(max(0, $newSkill));
 
         $this->setMood("Annoyed");
@@ -229,10 +257,10 @@ class Vampire extends Supernatural implements Nocturnal
 
     public function sunlightExposure()
     {
-        $newHealth = $this->getHealthLevel() - 70;
+        $newHealth = $this->getHealthLevel() - self::SUNLIGHT_HEALTH_PENALTY;
         $this->setHealthLevel(max(0, $newHealth));
 
-        $newSkill = $this->getSkillLevel() - 30;
+        $newSkill = $this->getSkillLevel() - self::SUNLIGHT_SKILL_PENALTY;
         $this->setSkillLevel(max(0, $newSkill));
 
         $this->setMood("Furious");
@@ -245,10 +273,10 @@ class Vampire extends Supernatural implements Nocturnal
 
     public function holyWaterSprayed()
     {
-        $newHealth = $this->getHealthLevel() - 40;
+        $newHealth = $this->getHealthLevel() - self::HOLY_WATER_HEALTH_PENALTY;
         $this->setHealthLevel(max(0, $newHealth));
 
-        $newSkill = $this->getSkillLevel() - 25;
+        $newSkill = $this->getSkillLevel() - self::HOLY_WATER_SKILL_PENALTY;
         $this->setSkillLevel(max(0, $newSkill));
 
         $this->setMood("Terrified");
@@ -265,35 +293,30 @@ class Vampire extends Supernatural implements Nocturnal
 // =============================================
 
 // ---- YOUNG VAMPIRE ----
-// A fledgling vampire just beginning its undead existence
 $youngVampire = new Vampire(
     'Lucian', 25, 2, 'Hypnosis', 35.0, 55.0,
     5.0, 65.0
 );
 
 // ---- DEFAULT VAMPIRE ----
-// A standard vampire with moderate power
 $defaultVampire = new Vampire(
     'Vladimir', 350, 25, 'Shadow Walk', 80.0, 95.0,
     45.0, 85.0
 );
 
 // ---- ANCIENT VAMPIRE ----
-// A legendary vampire of immense power
 $ancientVampire = new Vampire(
     'Dracula', 800, 60, 'Blood Magic', 95.0, 100.0,
     120.0, 100.0
 );
 
 // ---- NOBLE VAMPIRE ----
-// A sophisticated vampire from high society
 $nobleVampire = new Vampire(
     'Isabella', 200, 15, 'Charm', 70.0, 85.0,
     25.0, 78.0
 );
 
 // ---- BESTIAL VAMPIRE ----
-// A vampire that has embraced its monstrous side
 $bestialVampire = new Vampire(
     'Nosferatu', 150, 40, 'Feral Rage', 75.0, 80.0,
     35.0, 95.0

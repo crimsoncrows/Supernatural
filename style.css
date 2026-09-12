@@ -1,7 +1,13 @@
-body{
-    padding:0px;
-    margin: 0px auto;
-    background-image: url('bg-n109-main.png');
+    /* ======================================== */
+    /* GLOBAL STYLES */
+    /* ======================================== */
+
+body {
+    padding: 0;
+    margin: 0 auto;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)),
+    url('bg_img.jpg');
+
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -11,7 +17,6 @@ body{
     min-height: 100vh;
 }
 
-/* For Chrome, Edge, and Safari */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -25,15 +30,18 @@ body{
     border-radius: 3px;
 }
 
-/* For Firefox */
 * {
     scrollbar-width: thin;
     scrollbar-color: #a54747 #000;
 }
 
 
-.welcome{
-    display:flex;
+/* ======================================== */
+/* WELCOME SECTION */
+/* ======================================== */
+
+.welcome {
+    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -44,49 +52,51 @@ body{
     position: relative;
 }
 
-.welcome img{
-    position:relative;
+.welcome img {
+    position: relative;
     max-width: 100%;
 }
 
-.welcome a{
+.welcome a {
     mix-blend-mode: screen;
-    color:white;
+    color: white;
     font-size: 20px;
     font-family: 'DM Serif Text', serif;
     word-spacing: 10px;
     letter-spacing: 10px;
     font-weight: 300;
     position: absolute;
-    bottom:40px;
-
+    bottom: 40px;
     background: -webkit-linear-gradient(#eee, #a54747);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-
     transition: transform 5s;
 }
 
-.welcome a:hover{
+.welcome a:hover {
     transform: scale(1.5);
-    transition-timing-function:  cubic-bezier(0,.58,0,1.02);
+    transition-timing-function: cubic-bezier(0, .58, 0, 1.02);
 }
 
-
-.welcome hr{
-    border:1px solid rgb(218, 184, 184);
+.welcome hr {
+    border: 1px solid rgb(218, 184, 184);
     width: 250px;
     position: absolute;
-    bottom: 20PX;
+    bottom: 20px;
     mix-blend-mode: screen;
     fill-opacity: 75%;
     transition: transform 5s;
 }
 
-.welcome hr:hover{
+.welcome hr:hover {
     transform: scale(0);
-    transition-timing-function:  cubic-bezier(0,.58,0,1.02);
+    transition-timing-function: cubic-bezier(0, .58, 0, 1.02);
 }
+
+
+/* ======================================== */
+/* INTRO & HOW TO PLAY */
+/* ======================================== */
 
 .intro-text {
     text-align: center;
@@ -108,7 +118,7 @@ body{
 
 .intro-text p {
     font-family: Caudex, serif;
-    color:rgba(255, 255, 255, 0.783);
+    color: rgba(255, 255, 255, 0.783);
     letter-spacing: 2px;
     font-weight: 100;
     line-height: 1.6;
@@ -132,13 +142,10 @@ body{
     border: 1px solid rgba(217, 74, 74, 0.3);
     border-radius: 6px;
     color: #cbb0b0;
-
     font-family: Caudex, serif;
-    color:rgb(255, 120, 120);
     letter-spacing: 2px;
     font-weight: 100;
 }
-
 
 .how-to-play ol {
     padding-left: 20px;
@@ -154,12 +161,17 @@ body{
     color: #e0c4c4;
 }
 
-.list-char{
+
+/* ======================================== */
+/* CHARACTER LISTS & CARDS */
+/* ======================================== */
+
+.list-char {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap:20px;
+    gap: 20px;
     flex-wrap: wrap;
 }
 
@@ -180,7 +192,6 @@ body{
     text-align: center;
     background-color: rgba(0, 0, 0, 0.167);
     border: 5px dotted rgba(147, 3, 3, 0.215);
-
     appearance: none;
     -webkit-appearance: none;
     background: none;
@@ -207,14 +218,35 @@ body{
     animation: glow 1s ease-in-out infinite alternate;
 }
 
-.char-info{
+.char-info {
     font-family: Caudex, serif;
-    color:rgb(255, 120, 120);
+    color: rgb(255, 120, 120);
     mix-blend-mode: difference;
     letter-spacing: 2px;
     font-weight: 100;
     font-size: 12px;
 }
+
+
+/* ======================================== */
+/* PLAYER HEADER */
+/* ======================================== */
+
+.player-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 15px;
+    border-right: 2px solid rgba(217, 74, 74, 0.5);
+}
+
+.player-pic {
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border: 1px solid rgba(217, 74, 74, 0.6);
+}
+
 
 /* ======================================== */
 /* RESPONSIVE STAT BAR */
@@ -224,42 +256,45 @@ body{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
-    margin: 70px auto 0;
+    margin: 30px auto 0;
     width: 90%;
     max-width: 1200px;
-    gap: 15px;
-    padding: 15px 25px;
-    background: rgba(20, 0, 0, 0.4);
-    border: 1px solid rgba(217, 74, 74, 0.3);
+    gap: 8px 12px;
+    padding: 12px 20px;
+    background: rgba(20, 0, 0, 0.6);
+    border: 1px solid rgba(217, 74, 74, 0.4);
+    border-radius: 6px;
+    box-sizing: border-box;
 }
 
 .stat-bar h2 {
     font-family: Caudex, serif;
     mix-blend-mode: color-dodge;
     color: whitesmoke;
-    letter-spacing: -2px;
+    letter-spacing: -1px;
     font-weight: 900;
-    font-size: 30px;
+    font-size: 20px;
     margin: 0;
-    padding-right: 20px;
-    border-right: 1px solid rgba(217, 74, 74, 0.5);
     white-space: nowrap;
+    border-right: none;
+    padding-right: 0;
 }
 
 .creature-info {
     display: flex;
     flex-direction: row;
-    align-items: baseline;
-    gap: 8px;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 4px 8px;
 }
 
 .creature-info h3 {
     font-family: Caudex, serif;
-    color: white;
-    mix-blend-mode: color-dodge;
-    font-variant: all-petite-caps;
+    color: #ff7878;
+    font-size: 12px;
     margin: 0;
     white-space: nowrap;
 }
@@ -267,12 +302,98 @@ body{
 .creature-info span {
     font-family: Caudex, serif;
     color: whitesmoke;
-    font-weight: 100;
+    font-weight: bold;
+    font-size: 13px;
     white-space: nowrap;
 }
 
+.stat-bar form {
+    margin-left: auto;
+}
+
+.stat-bar .method-btn {
+    margin-top: 0;
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+
 /* ======================================== */
-/* RESPONSIVE BATTLEFIELD CONTAINER */
+/* BATTLE PROGRESS BARS */
+/* ======================================== */
+
+.battle-progress {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-basis: 100%;
+    margin: 10px 0;
+    padding: 0 10px;
+    gap: 15px;
+    box-sizing: border-box;
+    background: transparent;
+    border: none;
+}
+
+.health-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.health-label {
+    font-family: Caudex, serif;
+    color: white;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.health-label span {
+    color: #a54747;
+    font-weight: bold;
+}
+
+.health-bar-bg {
+    width: 100%;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(217, 74, 74, 0.3);
+    overflow: hidden;
+}
+
+.health-fill {
+    height: 100%;
+    transition: width 0.4s ease-out;
+}
+
+.predator-health .health-fill {
+    background: linear-gradient(90deg, #1a75ff, #4da6ff);
+}
+
+.prey-health .health-fill {
+    background: linear-gradient(90deg, #cc0000, #ff4d4d);
+}
+
+.prey-health {
+    text-align: right;
+}
+
+.vs-text {
+    font-family: Caudex, serif;
+    font-size: 16px;
+    font-weight: 900;
+    color: rgba(217, 74, 74, 0.6);
+    margin: 0 5px;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+}
+
+
+/* ======================================== */
+/* BATTLEFIELD CONTAINER */
 /* ======================================== */
 
 .battlefield-container {
@@ -281,10 +402,15 @@ body{
     justify-content: center;
     align-items: stretch;
     gap: 30px;
-    margin: 40px auto 0;
+    margin: 15px auto 0;
     width: 90%;
     max-width: 1200px;
 }
+
+
+/* ======================================== */
+/* COMBAT LOG */
+/* ======================================== */
 
 .combat-log {
     width: 60%;
@@ -307,7 +433,7 @@ body{
 }
 
 .log-entries {
-    height: 150px;
+    height: 220px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -328,6 +454,7 @@ body{
         font-weight: 900;
         transform: scale(0.9);
     }
+
     to {
         opacity: 1;
         color: red;
@@ -344,33 +471,67 @@ body{
     color: #e0c4c4;
 }
 
+
+/* ======================================== */
+/* FLOATING EFFECT */
+/* ======================================== */
+
 .floating {
     animation-name: floating;
     animation-duration: 5s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
-    margin-left: 0px;
-    margin-top: 0px;
+    margin-left: 0;
+    margin-top: 0;
 }
 
 @keyframes floating {
-    0% { transform: translate(0,  0px); }
-    50%  { transform: translate(0, 15px); }
-    100%   { transform: translate(0, -0px); }
+    0% {
+        transform: translate(0, 0px);
+    }
+
+    50% {
+        transform: translate(0, 15px);
+    }
+
+    100% {
+        transform: translate(0, -0px);
+    }
 }
+
+
+/* ======================================== */
+/* GLOW ANIMATION */
+/* ======================================== */
 
 @keyframes glow {
     from {
-        text-shadow: 0 0 5px #1b0707a0, 0 0 10px #ffffff28, 0 0 15px #670303, 0 0 20px #a90000, 0 0 25px #a90000, 0 0 30px #a90000, 0 0 35px #a90000;
+        text-shadow:
+                0 0 5px #1b0707a0,
+                0 0 10px #ffffff28,
+                0 0 15px #670303,
+                0 0 20px #a90000,
+                0 0 25px #a90000,
+                0 0 30px #a90000,
+                0 0 35px #a90000;
     }
+
     to {
-        text-shadow: 0 0 10px #160b0bec, 0 0 20px #ffffff28, 0 0 30px #a90000, 0 0 40px #381616, 0 0 50px #a90000, 0 0 60px #a90000, 0 0 70px #a90000;
+        text-shadow:
+                0 0 10px #160b0bec,
+                0 0 20px #ffffff28,
+                0 0 30px #a90000,
+                0 0 40px #381616,
+                0 0 50px #a90000,
+                0 0 60px #a90000,
+                0 0 70px #a90000;
     }
 }
 
 .method-btn:hover {
     transform: scale(1.1);
 }
+
 
 /* ======================================== */
 /* PREY AREA */
@@ -411,32 +572,9 @@ body{
     padding-top: 15px;
 }
 
-/* ======================================== */
-/* PLAYER HEADER */
-/* ======================================== */
-
-.player-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding-right: 20px;
-    border-right: 1px solid rgba(217, 74, 74, 0.5);
-}
-
-.player-pic {
-    width: 45px;
-    height: 45px;
-    object-fit: cover;
-    border: 1px solid rgba(217, 74, 74, 0.6);
-}
-
-.stat-bar h2 {
-    border-right: none;
-    padding-right: 0;
-}
 
 /* ======================================== */
-/* CREATURE METHODS - ACTION BUTTONS */
+/* CREATURE METHODS */
 /* ======================================== */
 
 .creature-methods {
@@ -464,11 +602,12 @@ body{
     width: 100%;
 }
 
+
 /* ======================================== */
-/* BATTLEFIELD MECHANICS DOCUMENTATION */
+/* CLASS MECHANICS / CLASS EXPLANATION */
 /* ======================================== */
 
-.battlefield-mechanics {
+.class-mechanics {
     max-width: 1100px;
     margin: 40px auto;
     padding: 40px 45px;
@@ -476,20 +615,126 @@ body{
     color: #240909;
     font-family: "Caudex", serif;
     line-height: 1.75;
+    box-sizing: border-box;
+}
+
+.class-mechanics h2 {
+    margin: 0 0 25px;
+    padding-bottom: 15px;
+    font-family: "Caudex", serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+    border-bottom: 3px solid #b31313;
+}
+
+.class-mechanics h3 {
+    margin-top: 30px;
+    margin-bottom: 12px;
+    font-family: "Caudex", serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.class-mechanics p {
+    margin: 14px 0;
+    font-family: "Caudex", serif;
+    font-size: 16px;
+    color: whitesmoke;
+}
+
+.class-mechanics strong {
+    color: #ff7878;
+    font-weight: 700;
+}
+
+.class-mechanics ul,
+.class-mechanics ol {
+    margin: 15px 0;
+    padding-left: 25px;
+}
+
+.class-mechanics li {
+    margin-bottom: 10px;
+    color: #e0c4c4;
+    font-size: 15px;
+}
+
+.class-mechanics li::marker {
+    color: #a90f0f;
+}
+
+.class-mechanics code {
+    padding: 3px 7px;
+    background: #180707;
+    color: #ff7878;
+    border: 1px solid #8f1010;
+    border-radius: 4px;
+    font-family: "DM Mono", monospace;
+    font-size: 0.88em;
+}
+
+.class-mechanics .mechanic-section {
+    margin-bottom: 30px;
+    padding: 20px 25px;
+    background: rgba(20, 0, 0, 0.45);
+    border-left: 3px solid #8f1010;
+}
+
+.class-mechanics .mechanic-section h3 {
+    margin-top: 0;
+}
+
+.class-mechanics .class-title {
+    color: #ff7878;
+    font-family: "Caudex", serif;
+    font-size: 24px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.class-mechanics .class-description {
+    color: #e0c4c4;
+    font-family: "DM Mono", monospace;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.class-mechanics hr {
+    margin: 30px 0;
+    border: none;
+    border-top: 1px solid rgba(217, 74, 74, 0.4);
+}
+
+
+/* ======================================== */
+/* BATTLEFIELD MECHANICS */
+/* ======================================== */
+
+.battlefield-mechanics {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 40px 45px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #e0c4c4;
+    font-family: "Caudex", serif;
+    line-height: 1.75;
+    box-sizing: border-box;
 }
 
 .battlefield-mechanics h1 {
     margin: 0 0 25px;
+    padding-bottom: 15px;
     font-family: "Caudex", serif;
     font-size: 34px;
     font-weight: 700;
     color: white;
     border-bottom: 3px solid #b31313;
-    padding-bottom: 15px;
 }
 
 .battlefield-mechanics h2 {
-    margin-top: 45px;
+    margin-top: 40px;
     margin-bottom: 18px;
     font-family: "Caudex", serif;
     font-size: 27px;
@@ -503,7 +748,7 @@ body{
     font-family: "Caudex", serif;
     font-size: 21px;
     font-weight: 700;
-    color: white;
+    color: #ffffff;
 }
 
 .battlefield-mechanics p {
@@ -515,37 +760,16 @@ body{
 
 .battlefield-mechanics ol {
     margin: 25px 0;
-    padding-left: 0;
-    list-style: none;
-    counter-reset: battlefield-step;
+    padding-left: 25px;
 }
 
 .battlefield-mechanics ol > li {
-    counter-increment: battlefield-step;
-    position: relative;
-    margin-bottom: 20px;
-    padding: 20px 25px 20px 65px;
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid #e5bcbc;
+    margin-bottom: 15px;
+    padding: 15px 20px;
+    background: rgba(20, 0, 0, 0.45);
+    border: 1px solid rgba(217, 74, 74, 0.25);
+    color: #e0c4c4;
     font-size: 16px;
-}
-
-.battlefield-mechanics ol > li::before {
-    content: counter(battlefield-step);
-    position: absolute;
-    left: 18px;
-    top: 18px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #a90f0f;
-    color: #ffffff;
-    border-radius: 50%;
-    font-family: "DM Mono", monospace;
-    font-size: 14px;
-    font-weight: 500;
 }
 
 .battlefield-mechanics ul {
@@ -556,22 +780,24 @@ body{
 .battlefield-mechanics ul li {
     margin-bottom: 10px;
     padding-left: 5px;
+    color: #e0c4c4;
 }
 
-.battlefield-mechanics ul li::marker {
+.battlefield-mechanics ul li::marker,
+.battlefield-mechanics ol li::marker {
     color: #a90f0f;
 }
 
 .battlefield-mechanics strong {
-    color: #8f1010;
+    color: #ff7878;
     font-weight: 700;
 }
 
 .battlefield-mechanics code {
     padding: 3px 7px;
-    background: #f8eaea;
-    color: #9d1111;
-    border: 1px solid #e3b5b5;
+    background: #180707;
+    color: #ff7878;
+    border: 1px solid #8f1010;
     border-radius: 4px;
     font-family: "DM Mono", monospace;
     font-size: 0.88em;
@@ -610,22 +836,23 @@ body{
 .battlefield-mechanics hr {
     margin: 30px 0;
     border: none;
-    border-top: 1px solid #d9aaaa;
+    border-top: 1px solid rgba(217, 74, 74, 0.4);
 }
 
 .battlefield-mechanics a {
-    color: #a90f0f;
+    color: #ff7878;
     font-weight: 700;
     text-decoration: none;
 }
 
 .battlefield-mechanics a:hover {
-    color: #6e0808;
+    color: #ffffff;
     text-decoration: underline;
 }
 
+
 /* ======================================== */
-/* MODAL */
+/* GAME OVER MODAL */
 /* ======================================== */
 
 .modal-overlay {
@@ -650,8 +877,95 @@ body{
     font-family: Caudex, serif;
 }
 
+
 /* ======================================== */
-/* PREPARE.PHP PAGE */
+/* GAME OVER - TWO COLUMN LAYOUT */
+/* ======================================== */
+
+.game-over-box {
+    width: 90%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: row;
+    background: #1a0000;
+    border: 1px solid #a00;
+    color: #eee;
+    font-family: Caudex, serif;
+    box-shadow: 0 0 30px rgba(160, 0, 0, 0.4);
+}
+
+
+/* ======================================== */
+/* GAME OVER - RESULT */
+/* ======================================== */
+
+.game-over-result {
+    width: 40%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    border-right: 1px solid rgba(217, 74, 74, 0.4);
+}
+
+.game-over-result h2 {
+    margin: 0 0 25px;
+    color: white;
+    font-family: Caudex, serif;
+    font-size: 32px;
+    letter-spacing: 4px;
+}
+
+.result-message {
+    color: #ff7878;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+
+/* ======================================== */
+/* GAME OVER - BATTLE HISTORY */
+/* ======================================== */
+
+.game-over-history {
+    width: 60%;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+.game-over-history h3 {
+    margin: 0 0 15px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(217, 74, 74, 0.4);
+    color: #ff7878;
+    font-family: Caudex, serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.history-entries {
+    height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.history-entries p {
+    margin: 0 0 10px;
+    color: #e0c4c4;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* ======================================== */
+/* PREPARE PAGE */
 /* ======================================== */
 
 .setup-wrapper {
@@ -684,7 +998,6 @@ body{
     margin: 0 auto;
 }
 
-/* PRESET SECTION */
 .preset-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -725,12 +1038,10 @@ body{
     color: rgb(200, 150, 150);
 }
 
-/* Remove all images from presets */
 .preset-section .creature-img {
     display: none;
 }
 
-/* Ensure the manual entry form below the presets takes full width */
 .setup-form form:not(.char-form) {
     width: 100%;
     display: flex;
@@ -779,8 +1090,9 @@ body{
     background: rgba(160, 33, 33, 0.7);
 }
 
+
 /* ======================================== */
-/* HOME PAGE FIXES */
+/* HOME PAGE */
 /* ======================================== */
 
 .home-container {
@@ -809,27 +1121,54 @@ body{
     width: 100%;
 }
 
+
 /* ======================================== */
-/* RESPONSIVE - TABLETS AND SMALLER */
+/* CLASS MECHANICS - MOBILE */
+/* ======================================== */
+
+@media (max-width: 768px) {
+
+    .class-mechanics {
+        width: 90%;
+        margin: 30px auto;
+        padding: 25px 20px;
+    }
+
+    .class-mechanics h2 {
+        font-size: 25px;
+    }
+
+    .class-mechanics h3 {
+        font-size: 19px;
+    }
+
+    .class-mechanics p {
+        font-size: 15px;
+    }
+
+    .class-mechanics .mechanic-section {
+        padding: 15px;
+    }
+
+    .class-mechanics .class-title {
+        font-size: 20px;
+    }
+}
+
+
+/* ======================================== */
+/* RESPONSIVE - TABLETS */
 /* ======================================== */
 
 @media (max-width: 1024px) {
+
     .stat-bar {
+        padding: 15px;
         gap: 10px;
-        padding: 12px 18px;
     }
 
     .stat-bar h2 {
-        font-size: 24px;
-        padding-right: 15px;
-    }
-
-    .creature-info h3 {
-        font-size: 13px;
-    }
-
-    .creature-info span {
-        font-size: 13px;
+        font-size: 18px;
     }
 
     .battlefield-container {
@@ -869,137 +1208,111 @@ body{
     .preset-section {
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     }
+
+    .game-over-box {
+        width: 92%;
+        max-width: 850px;
+    }
+
+    .battlefield-mechanics {
+        width: 90%;
+        padding: 30px;
+    }
 }
 
+
 /* ======================================== */
-/* RESPONSIVE - MOBILE PHONES */
+/* RESPONSIVE - MOBILE */
 /* ======================================== */
 
 @media (max-width: 768px) {
-    /* STAT BAR */
+
     .stat-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        padding: 15px;
         margin-top: 40px;
+        padding: 15px;
+        justify-content: center;
     }
 
-    .stat-bar h2 {
-        font-size: 20px;
-        padding-right: 0;
-        border-right: none;
-        white-space: normal;
+    .stat-bar form {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .stat-bar form button {
+        width: 100%;
     }
 
     .player-header {
         border-right: none;
+        border-bottom: 1px solid rgba(217, 74, 74, 0.4);
         padding-right: 0;
+        padding-bottom: 8px;
         width: 100%;
         justify-content: center;
-        flex-wrap: wrap;
     }
 
-    .player-pic {
-        width: 35px;
-        height: 35px;
+    .battle-progress {
+        flex-direction: column;
+        gap: 10px;
     }
 
-    .creature-info {
-        flex-wrap: wrap;
+    .health-wrapper {
         width: 100%;
-        justify-content: space-between;
-        border-bottom: 1px solid rgba(217, 74, 74, 0.15);
-        padding: 4px 0;
     }
 
-    .creature-info h3 {
-        font-size: 12px;
-        white-space: normal;
+    .prey-health {
+        text-align: left;
     }
 
-    .creature-info span {
-        font-size: 12px;
+    .vs-text {
+        margin: 5px 0;
     }
 
-    /* INTRO TEXT */
-    .intro-text h2 {
-        font-size: 36px;
-        letter-spacing: -2px;
-    }
-
-    .intro-text p {
-        font-size: 14px;
-    }
-
-    /* BATTLEFIELD */
-    .battlefield-container {
-        width: 95%;
-        gap: 15px;
-        margin: 20px auto 0;
-    }
-
-    .combat-log {
-        padding: 15px;
-    }
-
-    .combat-log h3 {
-        font-size: 16px;
-    }
-
-    .log-entries {
-        height: 120px;
-    }
-
-    .log-entries p {
-        font-size: 12px;
-    }
-
-    .prey-area {
-        padding: 15px;
-    }
-
-    .prey-area h3 {
-        font-size: 16px;
-    }
-
-    .prey-stats p {
-        font-size: 12px;
-    }
-
-    /* ACTION BUTTONS */
     .creature-methods {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        margin: 20px auto;
-        padding: 0 10px;
     }
 
-    .method-btn {
-        font-size: 12px;
-        padding: 8px;
-        margin-top: 10px;
+
+    /* GAME OVER MOBILE */
+
+    .game-over-box {
+        width: 90%;
+        max-height: 85vh;
+        flex-direction: column;
+        overflow-y: auto;
     }
 
-    /* MODAL */
-    .modal-box {
-        padding: 1.5rem 2rem;
-        margin: 0 15px;
+    .game-over-result {
+        width: 100%;
+        padding: 30px 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(217, 74, 74, 0.4);
     }
 
-    .modal-box p {
-        font-size: 16px;
+    .game-over-result h2 {
+        font-size: 26px;
     }
 
-    /* BATTLEFIELD MECHANICS */
+    .game-over-history {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .history-entries {
+        height: 220px;
+    }
+
+
+    /* BATTLEFIELD MECHANICS MOBILE */
+
     .battlefield-mechanics {
-        margin: 20px 12px;
+        width: 90%;
+        margin: 30px auto;
         padding: 25px 20px;
-        border-radius: 10px;
     }
 
     .battlefield-mechanics h1 {
-        font-size: 27px;
+        font-size: 28px;
     }
 
     .battlefield-mechanics h2 {
@@ -1011,452 +1324,65 @@ body{
     }
 
     .battlefield-mechanics p {
-        font-size: 16px;
-    }
-
-    .battlefield-mechanics ol > li {
-        padding: 18px 15px 18px 55px;
-        font-size: 14px;
-    }
-
-    .battlefield-mechanics pre {
-        padding: 15px;
-    }
-
-    .battlefield-mechanics pre code {
-        font-size: 12px;
-    }
-
-    /* PREPARE PAGE */
-    .setup-wrapper {
-        gap: 20px;
-        padding: 0 15px;
-        margin-top: 30px;
-    }
-
-    .setup-pic .creature-img {
-        width: 150px;
-        height: 220px;
-    }
-
-    .setup-form {
-        gap: 12px;
-    }
-
-    .preset-section {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 12px;
-    }
-
-    .preset-section .char-card {
-        padding: 12px 10px;
-        min-height: 80px;
-    }
-
-    .preset-section .char-name {
-        font-size: 16px;
-    }
-
-    .preset-section .char-info {
-        font-size: 11px;
-    }
-
-    .field label {
-        font-size: 12px;
-    }
-
-    .field input {
-        padding: 6px 8px;
-        font-size: 14px;
-    }
-
-    .submit-btn {
-        padding: 8px;
-        font-size: 14px;
-    }
-
-    .how-to-play {
-        padding: 15px 18px;
-        font-size: 13px;
-    }
-
-    .how-to-play ol {
-        font-size: 13px;
-        padding-left: 15px;
-    }
-
-    /* HOME PAGE */
-    .home-container {
-        min-height: auto;
-        padding: 15px;
-    }
-
-    .home-container .intro-text {
-        padding: 0 10px;
-    }
-
-    .home-container .how-to-play {
-        padding: 15px;
-    }
-
-    .welcome {
-        margin-top: 30px;
-    }
-
-    .welcome a {
-        font-size: 14px;
-        word-spacing: 5px;
-        letter-spacing: 5px;
-        bottom: 25px;
-    }
-}
-
-/* ======================================== */
-/* RESPONSIVE - VERY SMALL PHONES */
-/* ======================================== */
-
-@media (max-width: 480px) {
-    .stat-bar h2 {
-        font-size: 17px;
-    }
-
-    .intro-text h2 {
-        font-size: 28px;
-    }
-
-    .intro-text p {
-        font-size: 13px;
-    }
-
-    .creature-methods {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-
-    .method-btn {
-        font-size: 10px;
-        padding: 6px;
-        letter-spacing: 1px;
-    }
-
-    .preset-section {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .preset-section .char-card {
-        padding: 10px 8px;
-        min-height: 70px;
-    }
-
-    .preset-section .char-name {
-        font-size: 14px;
-    }
-
-    .preset-section .char-info {
-        font-size: 10px;
-    }
-
-    .setup-pic .creature-img {
-        width: 120px;
-        height: 180px;
-    }
-
-    .combat-log {
-        padding: 10px;
-    }
-
-    .log-entries {
-        height: 100px;
-    }
-
-    .log-entries p {
-        font-size: 10px;
-    }
-
-    .prey-area {
-        padding: 10px;
-    }
-
-    .prey-area h3 {
-        font-size: 14px;
-    }
-
-    .prey-stats p {
-        font-size: 11px;
-    }
-
-    .modal-box {
-        padding: 1rem 1.5rem;
-    }
-
-    .modal-box p {
-        font-size: 14px;
-    }
-
-    .battlefield-mechanics {
-        padding: 15px;
-        margin: 10px 8px;
-    }
-
-    .battlefield-mechanics h1 {
-        font-size: 22px;
-    }
-
-    .battlefield-mechanics h2 {
-        font-size: 19px;
-    }
-
-    .battlefield-mechanics h3 {
-        font-size: 17px;
-    }
-
-    .battlefield-mechanics p {
-        font-size: 14px;
-    }
-
-    .battlefield-mechanics ol > li {
-        padding: 14px 12px 14px 45px;
-        font-size: 13px;
-    }
-
-    .battlefield-mechanics ol > li::before {
-        width: 24px;
-        height: 24px;
-        font-size: 12px;
-        left: 12px;
-        top: 14px;
-    }
-}
-
-/* ========================================
-   CLASS MECHANICS - EDUCATIONAL SECTION
-   ======================================== */
-
-.class-mechanics {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 40px 45px;
-
-    background-color: rgba(0, 0, 0, 0.7);
-    color: whitesmoke;
-
-    font-family: "Caudex", serif;
-    line-height: 1.75;
-}
-
-
-/* ========================================
-   MAIN TITLE
-   ======================================== */
-
-.class-mechanics h2 {
-    margin: 0 0 30px;
-
-    font-family: "Caudex", serif;
-    font-size: 30px;
-    font-weight: 700;
-
-    color: white;
-
-    border-bottom: 3px solid #b31313;
-    padding-bottom: 15px;
-}
-
-
-/* ========================================
-   CREATURE EXPLANATION CARD
-   ======================================== */
-
-.class-explanation {
-    margin: 25px 0;
-    padding: 25px 30px;
-
-    background-color: rgba(255, 255, 255, 0.9);
-
-    border: 1px solid #b31313;
-    border-left: 6px solid #a90f0f;
-
-    color: #240909;
-}
-
-
-/* ========================================
-   CREATURE NAME
-   ======================================== */
-
-.class-explanation h3 {
-    margin: 0 0 20px;
-
-    font-family: "Caudex", serif;
-    font-size: 25px;
-    font-weight: 700;
-
-    color: #8f1010;
-
-    border-bottom: 1px solid #d9aaaa;
-    padding-bottom: 10px;
-}
-
-
-/* ========================================
-   DESCRIPTION TEXT
-   ======================================== */
-
-.class-explanation p {
-    margin: 12px 0;
-
-    font-family: "Caudex", serif;
-    font-size: 16px;
-
-    color: #321010;
-}
-
-.class-explanation p strong {
-    color: #8f1010;
-}
-
-
-/* ========================================
-   LISTS
-   ======================================== */
-
-.class-explanation ul {
-    margin: 10px 0 20px;
-    padding-left: 28px;
-}
-
-.class-explanation li {
-    margin-bottom: 9px;
-
-    font-family: "Caudex", serif;
-    font-size: 15.5px;
-
-    color: #321010;
-}
-
-.class-explanation li::marker {
-    color: #a90f0f;
-}
-
-
-/* ========================================
-   NESTED LISTS
-   ======================================== */
-
-.class-explanation ul ul {
-    margin-top: 8px;
-    margin-bottom: 10px;
-    padding-left: 25px;
-}
-
-.class-explanation ul ul li {
-    margin-bottom: 6px;
-}
-
-
-/* ========================================
-   BOLD TEXT
-   ======================================== */
-
-.class-explanation strong {
-    color: #8f1010;
-    font-weight: 700;
-}
-
-
-/* ========================================
-   INLINE PHP / CODE
-   ======================================== */
-
-.class-explanation code {
-    padding: 3px 7px;
-
-    background-color: #f8eaea;
-    color: #9d1111;
-
-    border: 1px solid #e3b5b5;
-    border-radius: 4px;
-
-    font-family: "DM Mono", monospace;
-    font-size: 0.85em;
-}
-
-
-/* ========================================
-   CODE INSIDE STRONG TEXT
-   ======================================== */
-
-.class-explanation strong code {
-    color: #9d1111;
-    background-color: #f8eaea;
-}
-
-
-/* ========================================
-   ABILITY / OOP SECTION SPACING
-   ======================================== */
-
-.class-explanation p + ul {
-    margin-top: 5px;
-}
-
-.class-explanation li strong {
-    color: #8f1010;
-}
-
-
-/* ========================================
-   HOVER EFFECT
-   ======================================== */
-
-.class-explanation {
-    transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease,
-            border-color 0.2s ease;
-}
-
-.class-explanation:hover {
-    transform: translateY(-2px);
-
-    border-color: #d01919;
-
-    box-shadow: 0 8px 20px rgba(140, 0, 0, 0.18);
-}
-
-
-/* ========================================
-   MOBILE
-   ======================================== */
-
-@media (max-width: 768px) {
-
-    .class-mechanics {
-        margin: 20px 12px;
-        padding: 25px 20px;
-    }
-
-    .class-mechanics h2 {
-        font-size: 25px;
-    }
-
-    .class-explanation {
-        padding: 20px;
-    }
-
-    .class-explanation h3 {
-        font-size: 22px;
-    }
-
-    .class-explanation p {
         font-size: 15px;
     }
 
-    .class-explanation li {
+    .battlefield-mechanics ol > li {
+        padding: 12px 15px;
         font-size: 14px;
     }
+}
 
-    .class-explanation ul {
-        padding-left: 22px;
+
+/* ======================================== */
+/* VERY SMALL PHONES */
+/* ======================================== */
+
+@media (max-width: 480px) {
+
+    .creature-methods {
+        grid-template-columns: 1fr;
+    }
+
+    .game-over-box {
+        width: 94%;
+    }
+
+    .game-over-result {
+        padding: 25px 15px;
+    }
+
+    .game-over-history {
+        padding: 15px;
+    }
+
+    .game-over-result h2 {
+        font-size: 23px;
+        letter-spacing: 2px;
+    }
+
+    .result-message {
+        font-size: 12px;
+    }
+
+    .history-entries {
+        height: 180px;
+    }
+
+    .history-entries p {
+        font-size: 11px;
+    }
+
+    .battlefield-mechanics {
+        width: 94%;
+        padding: 20px 15px;
+    }
+
+    .battlefield-mechanics h1 {
+        font-size: 24px;
+    }
+
+    .battlefield-mechanics h2 {
+        font-size: 21px;
     }
 }

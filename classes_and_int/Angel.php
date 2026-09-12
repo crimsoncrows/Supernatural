@@ -10,6 +10,32 @@ class Angel extends Supernatural implements FlyandChange
 {
     use Logger;
 
+    // SKILL
+    private const SKILL_BOOST = 5;
+
+    // HEAL PREY
+    private const HEAL_SUCCESS_CHANCE_PER_100 = 20;
+    private const HEAL_SKILL_BOOST = 5;
+
+    // BLESS PREY
+    private const BLESS_DAMAGE_MIN = 3;
+    private const BLESS_DAMAGE_MAX = 8;
+    private const BLESS_DIVINITY_GAIN = 10;
+
+    // SPAWN
+    private const SPAWN_HEALTH_COST = 0.75;
+    private const SPAWN_DEMON_CHANCE_PER_1000 = 5;
+    private const SPAWN_DEMON_HEALTH_PENALTY = 40;
+
+    // MORPH FLAVOR
+    private const MORPH_TYPES = ["seraph", "white dove", "pillar of light", "winged flame", "cherub", "watcher", "herald", "veiled figure", "robed elder", "child of light", "wandering pilgrim", "blind prophet", "silent choir", "star-eyed stranger", "old priest", "barefoot orphan"];
+
+    // ATTACK
+    private const ATTACK_POWER_MIN = 5;
+    private const ATTACK_POWER_MAX = 15;
+    private const ATTACK_DIVINITY_GAIN_MIN = 1;
+    private const ATTACK_DIVINITY_GAIN_MAX = 3;
+
     // PROPERTIES exclusive to angel
     private float $divinityLevel;
     private string $aura;
@@ -42,7 +68,7 @@ class Angel extends Supernatural implements FlyandChange
     //OVERRIDDEN ABSTRACT METHODS (from Supernatural)
     public function performSkill()
     {
-        $this->setSkillLevel($this->getSkillLevel() + 5);
+        $this->setSkillLevel($this->getSkillLevel() + self::SKILL_BOOST);
         return $this->getName() . " performs " . $this->getAbility() .
             " with skill level " . $this->getSkillLevel() . ".";
     }
@@ -57,20 +83,20 @@ class Angel extends Supernatural implements FlyandChange
     public function healPrey($prey, $healAmount)
     {
         // 20% chance to redeem the prey (set mood to "redeemed" and vitality to 0)
-        if (rand(1, 100) <= 20) {
+        if (rand(1, 100) <= self::HEAL_SUCCESS_CHANCE_PER_100) {
             // Success! Prey is redeemed
             $prey->setPreyMood("redeemed");
             $prey->setPreyHealth(0);
             $_SESSION['prey_mood'] = "redeemed";
             $_SESSION['prey_health'] = 0;
 
-            $this->setSkillLevel($this->getSkillLevel() + 5);
+            $this->setSkillLevel($this->getSkillLevel() + self::HEAL_SKILL_BOOST);
             return $this->getName() . " attempts to heal " . $prey->getPreyName() .
                 " and SUCCEEDS! " . $prey->getPreyName() . " is REDEEMED!";
 
         } else {
             // Failed attempt - prey remains unchanged
-            $this->setSkillLevel($this->getSkillLevel() + 5);
+            $this->setSkillLevel($this->getSkillLevel() + self::HEAL_SKILL_BOOST);
             return $this->getName() . " attempts to heal " . $prey->getPreyName() .
                 " but fails. " . $prey->getPreyName() . " remains unchanged.";
         }
@@ -79,13 +105,13 @@ class Angel extends Supernatural implements FlyandChange
     public function blessPrey($prey, $blessing)
     {
         // Reduce cursed prey health by 3-8 after being blessed
-        $damage = rand(3, 8);
+        $damage = rand(self::BLESS_DAMAGE_MIN, self::BLESS_DAMAGE_MAX);
         $newHealth = $prey->getPreyHealth() - $damage;
         $prey->setPreyHealth(max(0, $newHealth));
         $_SESSION['prey_health'] = $prey->getPreyHealth();
 
         //add divinity level after blessing
-        $this->setDivinityLevel($this->getDivinityLevel() + 10);
+        $this->setDivinityLevel($this->getDivinityLevel() + self::BLESS_DIVINITY_GAIN);
         return $this->getName() . " blesses " . $prey->getPreyName() .
             " with: " . $blessing . "! " . $prey->getPreyName() . " takes " . $damage . " damage!";
     }
@@ -98,11 +124,11 @@ class Angel extends Supernatural implements FlyandChange
 
     public function spawn()
     {
-        $this->setHealthLevel(max(0, $this->getHealthLevel() - 0.75));
+        $this->setHealthLevel(max(0, $this->getHealthLevel() - self::SPAWN_HEALTH_COST));
 
         // 0.5% chance to spawn a malicious demon pretending to be an angel
-        if (rand(1, 1000) <= 5) {
-            $this->setHealthLevel(max(0, $this->getHealthLevel() - 40));
+        if (rand(1, 1000) <= self::SPAWN_DEMON_CHANCE_PER_1000) {
+            $this->setHealthLevel(max(0, $this->getHealthLevel() - self::SPAWN_DEMON_HEALTH_PENALTY));
             return "Bad health drop!! " . $this->getName() . " attempted to spawn a guardian, but a malicious demon slipped through disguised as an angel!";
         }
 
@@ -116,17 +142,16 @@ class Angel extends Supernatural implements FlyandChange
 
     public function morph()
     {
-        $morphTypes = ["seraph", "white dove", "pillar of light", "winged flame", "cherub", "watcher", "herald", "veiled figure", "robed elder", "child of light", "wandering pilgrim", "blind prophet", "silent choir", "star-eyed stranger", "old priest", "barefoot orphan"];
-        $morphedInto = $morphTypes[array_rand($morphTypes)];
+        $morphedInto = self::MORPH_TYPES[array_rand(self::MORPH_TYPES)];
         return $this->getName() . " morphs into a radiant form, inspiring hope in prey. " . $this->getName() . " is now a " .$morphedInto .".";
     }
     public function attack($prey)
     {
         //random attack number from 5-15 power. gains a little divinity when warding off demon
         if ($prey !== null) {
-            $power = rand(5, 15);
+            $power = rand(self::ATTACK_POWER_MIN, self::ATTACK_POWER_MAX);
             $prey->setPreyHealth(max(0, $prey->getPreyHealth() - $power));
-            $this->setDivinityLevel($this->getDivinityLevel() + rand(1, 3));
+            $this->setDivinityLevel($this->getDivinityLevel() + rand(self::ATTACK_DIVINITY_GAIN_MIN, self::ATTACK_DIVINITY_GAIN_MAX));
             $logMessage = $this->getName() . " smites the prey with holy light, " . $power . " damage!";
             return $logMessage;
         }
