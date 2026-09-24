@@ -1,23 +1,18 @@
-# Supernatural (still a little buggy, in debugging process)
-
-A PHP practice project — an OOP battle simulator where predator creatures (Vampire, Werewolf, Fiend, Netherlord) face off against guardian/prey types (Angel, Seraphim) in a turn-based encounter with a human "Prey" NPC caught in the middle.
-
+# Supernatural
+A PHP practice project — an OOP battle simulator where creatures face off against prey in a turn-based encounter with a human/demon "Prey" NPC caught in the middle. 
 This is a **remake of a 2025 Java CLI OOP project**, rebuilt in PHP as a study in translating class hierarchies, interfaces, and inheritance across languages.
+It includes Player vs. Bot with RNG Entity Generation.
 
-![Screenshot 1](https://i.postimg.cc/L6R63BVf/Screenshot-2026-09-08-220511.png)
-![Screenshot 2](https://i.postimg.cc/zX5XFSkh/Screenshot-2026-09-08-220530.png)
-![Screenshot 3](https://i.postimg.cc/wTHTQckm/Screenshot-2026-09-08-220608.png)
-![Screenshot 4](https://i.postimg.cc/tRF46mF5/Screenshot-2026-09-08-220608.png)
+![Screenshot 1](https://i.postimg.cc/ZnYQjTjC/image.png)
+![Screenshot 2](https://i.postimg.cc/xCLQBTKq/image.png)
 
 ## Concept
-
 > Born once in Java, reborn now in PHP — every predator and prey below carries the same blood, the same instincts, translated line by line across languages as a study in Object-Oriented Programming.
 
 Pick a creature, then battle a randomly generated human prey (or, for Angel/Seraphim, a demon) across a series of skill-based actions until one side's health hits zero.
 
-**Note:** The **N109 Zone** concept referenced in this project is not my own creation. It's used here purely as flavor/naming for the setting, not an original idea.
 
-## Playable Creatures
+## Playable Creatures (More to Come soon)
 
 | Creature | Role | Unique Traits |
 |---|---|---|
@@ -32,7 +27,7 @@ Pick a creature, then battle a randomly generated human prey (or, for Angel/Sera
 
 1. **Choose your side** — pick a predator to hunt, or a guardian to protect/resist.
 2. **Face your foe** — each round your creature and the prey exchange actions: predators attack and drain, guardians heal and bless.
-3. **Watch your stats** — Health, Skill Level, and creature-specific traits shift with every action.
+3. **Watch your stats** — Health, Skill Level, and creature-specific traits shift with every action. Rare events happen based on mood, stats and probability.
 4. **Survive or feast** — the round ends when one side's health reaches zero.
 
 ## Project Structure
