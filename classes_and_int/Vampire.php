@@ -322,6 +322,13 @@ $bestialVampire = new Vampire(
     35.0, 95.0
 );
 
+// ---- SULKY VAMPIRE ----
+$sulkyVampire = new Vampire(
+    'Marius', 150, 5, 'Petrification', 75.0, 90.0,
+    245.0, 100.0
+);
+
+
 // =============================================
 // 12. VAMPIRE COLLECTION
 // =============================================
@@ -331,7 +338,8 @@ $vampireCollection = [
     $defaultVampire,
     $ancientVampire,
     $nobleVampire,
-    $bestialVampire
+    $bestialVampire,
+    $sulkyVampire
     // Add future vampires here
 ];
 ?>

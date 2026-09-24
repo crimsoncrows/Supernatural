@@ -144,6 +144,7 @@ if (!isset($_SESSION['prey_name'])) {
             'Urban', 'Valeria', 'Walter', 'Ximena', 'Yarrow', 'Zara',
 
         // MYTHOLOGICAL/MYSTICAL NAMES
+
             'Aetherius', 'Boreas', 'Calypso', 'Delphine', 'Ephraim', 'Faustus',
             'Gaia', 'Hermione', 'Icarus', 'Jareth', 'Kismet', 'Lucienne',
             'Merlin', 'Nebula', 'Orpheus', 'Pandora', 'Quicksilver', 'Raven',
@@ -409,6 +410,38 @@ if (!isset($_SESSION['battlelog'])) {
     <link href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<?php if ($prey== null || $creature== null ): ?>
+    <div class="modal-overlay">
+        <div class="game-over-box">
+
+            <!-- LEFT SIDE -->
+            <div class="game-over-result">
+                <h2>SOMETHING'S MISSING</h2>
+
+                <p class="result-message">
+                    <?="A battle isn't ready yet..." ?>
+                </p>
+
+                <form method="POST" action="reset.php">
+                    <button type="submit" class="method-btn">
+                        Go Prepare
+                    </button>
+                </form>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="game-over-history">
+                <h3>Battle History</h3>
+
+                <div class="history-entries">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+<?php endif; ?>
 
 <!-- ============================================= -->
 <!-- 9. PLAYER STATUS BAR -->
@@ -812,6 +845,25 @@ if (!isset($_SESSION['battlelog'])) {
                 <!-- RIGHT SIDE -->
                 <div class="game-over-history">
                     <h3>Battle History</h3>
+
+                    <div class="battle-progress" style="margin-bottom:30px;">
+                        <div class="health-wrapper predator-health">
+                            <div class="health-label"><?= $creature->getName() ?> <span>(<?= $creature->getHealthLevel() ?> HP)</span></div>
+                            <div class="health-bar-bg">
+                                <div class="health-fill" style="width: <?= min(100, max(0, $creature->getHealthLevel())) ?>%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="vs-text">VS</div>
+
+                        <div class="health-wrapper prey-health">
+                            <div class="health-label"><?= $prey->getPreyName() ?> <span>(<?= $prey->getPreyHealth() ?> HP)</span></div>
+                            <div class="health-bar-bg">
+                                <div class="health-fill" style="width: <?= min(100, max(0, $prey->getPreyHealth())) ?>%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="history-entries">
                         <?php foreach ($_SESSION['battlelog'] as $entry): ?>

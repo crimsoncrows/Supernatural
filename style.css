@@ -371,7 +371,7 @@ body {
 }
 
 .predator-health .health-fill {
-    background: linear-gradient(90deg, #1a75ff, #4da6ff);
+    background: linear-gradient(90deg, #beff1a, #9bd539);
 }
 
 .prey-health .health-fill {
@@ -888,10 +888,8 @@ body {
     display: flex;
     flex-direction: row;
     background: #1a0000;
-    border: 1px solid #a00;
     color: #eee;
     font-family: Caudex, serif;
-    box-shadow: 0 0 30px rgba(160, 0, 0, 0.4);
 }
 
 
@@ -1015,7 +1013,7 @@ body {
     justify-content: center;
     min-height: 120px;
     border: 3px dotted rgba(147, 3, 3, 0.3);
-    background: rgba(0, 0, 0, 0.25);
+    background: rgb(19 8 8 / 0.58);
     transition: border-color 0.3s ease, background 0.3s ease;
 }
 
@@ -1027,7 +1025,6 @@ body {
 .preset-section .char-name {
     font-size: 22px;
     margin: 0 0 8px 0;
-    animation: glow 1s ease-in-out infinite alternate;
 }
 
 .preset-section .char-info {

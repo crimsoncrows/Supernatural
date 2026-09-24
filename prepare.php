@@ -933,6 +933,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player'])
 
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const logContainer = document.querySelector('.log-entries');
+        if (logContainer) {
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+    });
+</script>
 
 </body>
 </html>
