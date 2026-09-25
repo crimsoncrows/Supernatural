@@ -30,32 +30,6 @@ Pick a creature, then battle a randomly generated human prey (or, for Angel/Sera
 3. **Watch your stats** — Health, Skill Level, and creature-specific traits shift with every action. Rare events happen based on mood, stats and probability.
 4. **Survive or feast** — the round ends when one side's health reaches zero.
 
-## Project Structure
-
-```
-Supernatural/
-├── index.html              # Entry point
-├── home.php                 # Character select screen
-├── prepare.php               # Pre-battle setup (creates session state)
-├── battlefield.php           # Main battle loop — session-driven combat UI + logic
-├── reset.php                  # Resets session/battle state
-├── style.css                   # Styling
-├── classes_and_int/
-│   ├── Supernatural.php       # Base class for all creatures
-│   ├── FlyandChange.php        # Interface: fly, spawn, teleport, morph, attack
-│   ├── Nocturnal.php            # Interface: goOutside, monitorMoonStatus, lurkInTheDark
-│   ├── Logger.php                # Battle log trait/helper
-│   ├── Prey.php                   # Human/demon prey NPC
-│   ├── Fiend.php
-│   ├── Vampire.php
-│   ├── Netherlord.php
-│   ├── Angel.php
-│   ├── Seraphim.php
-│   └── Werewolf.php
-├── N109-LOGO.png
-└── bg-n109-main.png
-```
-
 ## OOP Design
 
 - **`Supernatural`** — abstract base class shared by every creature (name, age, human encounters, ability, skill level, health level).
